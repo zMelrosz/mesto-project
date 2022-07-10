@@ -1,0 +1,11 @@
+.card__like-heart
+{
+  display: inline-block;
+  margin-right: 20px;
+  vertical-align: middle;
+  width: 22px;
+  height: 19px;
+  background-image: url(../../../images/like_unactive.svg);
+  background-size: cover;
+  background-position: center;
+}

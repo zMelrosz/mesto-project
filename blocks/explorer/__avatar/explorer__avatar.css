@@ -1,0 +1,9 @@
+.explorer__avatar
+{
+  width: 120px;
+  height: 120px;
+  background-image: url(../../../images/Cousteau.png);
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+}

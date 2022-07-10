@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="./pages/pages.css">
+	<title>Mesto</title>
+</head>
+
+<body class="page">
+
+	<div class="popup ">
+		<div class="popup__container">
+			<div class="popup__close"></div>
+			<p class="popup__title">Редактировать профиль</p>
+			<!-- <label for="title">Имя</label> -->
+			<input class="popup__title-edit" type="text" id="title" placeholder="Имя" value="Жак-Ив Кусто">
+			<hr class="popup__line">
+			<!-- <label for="subtitle">Должность</label> -->
+			<input class="popup__subtitle-edit" type="text" id="subtitle" placeholder="Должность" value="Исследователь океана">
+			<hr class="popup__line">
+			<button class="popup__button" type="submit">Сохранить</button>
+		</div>
+	</div>
+
+	<header class="header">
+		<img class="header__logo" src="./images/logo.png">
+		<hr class="header__line">
+	</header>
+
+	<main>
+
+		<section class="explorer">
+			<div class="explorer__person">
+				<div class="explorer__avatar"></div>
+				<div class="explorer__description">
+					<h1 class="explorer__title">Жак-Ив Кусто<div class="explorer__edit"></div></h1>
+					<h2 class="explorer__subtitle">Исследователь окена</h2>
+				</div>
+			</div>
+			<div class="explorer__add"></div>
+		</section>
+
+		<section class="cards">
+			<div class="card">
+				<div class="card__image card__image_karachaevsk"></div>
+				<div class="card__info">
+					<p class="card__name">Карачаевск</p>
+					<label class="card__like-label">
+						<input class="card__like-checkbox" type="checkbox">
+						<span class="card__like-heart"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card__image card__image_elbrus"></div>
+				<div class="card__info">
+					<p class="card__name">Гора Эльбрус</p>
+					<label class="card__like-label">
+						<input class="card__like-checkbox" type="checkbox">
+						<span class="card__like-heart"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card__image card__image_dombai"></div>
+				<div class="card__info">
+					<p class="card__name">Домбай</p>
+					<label class="card__like-label">
+						<input class="card__like-checkbox" type="checkbox">
+						<span class="card__like-heart"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card__image card__image_elbrus"></div>
+				<div class="card__info">
+					<p class="card__name">Гора Эльбрус</p>
+					<label class="card__like-label">
+						<input class="card__like-checkbox" type="checkbox">
+						<span class="card__like-heart"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card__image card__image_dombai"></div>
+				<div class="card__info">
+					<p class="card__name">Домбай</p>
+					<label class="card__like-label">
+						<input class="card__like-checkbox" type="checkbox">
+						<span class="card__like-heart"></span>
+					</label>
+				</div>
+			</div>
+
+			<div class="card">
+				<div class="card__image card__image_karachaevsk"></div>
+				<div class="card__info">
+					<p class="card__name">Карачаево-Ч...</p>
+					<label class="card__like-label">
+						<input class="card__like-checkbox" type="checkbox">
+						<span class="card__like-heart"></span>
+					</label>
+				</div>
+			</div>
+
+		</section>
+	</main>
+	<footer class="footer"><p class="footer__text">© 2022 Mesto Russia</p></footer>
+
+</body>

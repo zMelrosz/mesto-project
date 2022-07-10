@@ -1,0 +1,9 @@
+.explorer
+{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: auto;
+  max-width: 880px;
+  margin-top: 36.25px;
+}

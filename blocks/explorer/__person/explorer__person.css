@@ -1,0 +1,5 @@
+.explorer__person
+{
+  display: flex;
+  flex-direction: row;
+}

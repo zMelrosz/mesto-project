@@ -1,0 +1,17 @@
+.popup__title-edit
+{
+  width: 358px;
+  margin: 0 auto;
+  margin-top: 39px;
+  border: none;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+}
+
+.popup__title-edit:focus
+{
+  outline: none;
+}
