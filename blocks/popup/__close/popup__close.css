@@ -6,10 +6,25 @@
   background-image: url(../../../images/Close.png);
   right: -42px;
   top: -42px;
+  box-sizing: border-box;
+  background-position: center;
+  background-size: cover;
 }
 
 .popup__close:hover
 {
   cursor: pointer;
   opacity: 0.6;
+}
+
+@media screen and (max-width: 879px) 
+{
+  .popup__close
+  {
+    width: 20px;
+    height: 20px;
+    right: 0;
+    top: -36px;
+    z-index: 10;
+  }
 }

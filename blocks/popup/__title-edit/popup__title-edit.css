@@ -2,7 +2,7 @@
 {
   width: 358px;
   margin: 0 auto;
-  margin-top: 39px;
+  margin-top: 54px;
   border: none;
   font-family: 'Inter';
   font-style: normal;
@@ -14,4 +14,13 @@
 .popup__title-edit:focus
 {
   outline: none;
+}
+
+@media screen and (max-width: 879px) 
+{
+  .popup__title-edit
+  {
+    margin-top: 75px;
+    width: calc(100vw - 25.625%);
+  }
 }

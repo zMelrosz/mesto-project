@@ -4,8 +4,20 @@
   display: flex;
   font-family: 'Inter';
   font-style: normal;
+  text-align: center;
   font-weight: 500;
   font-size: 42px;
   line-height: 48px;
   color: #fff;
+}
+
+@media screen and (max-width: 879px)
+{
+  .explorer__title
+  {
+    flex-wrap: nowrap;
+    font-family: 'Inter';
+    font-size: 27px;
+    line-height: 33px;
+  }  
 }

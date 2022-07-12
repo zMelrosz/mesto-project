@@ -16,3 +16,12 @@
   opacity: 0.6;
   cursor: pointer;
 }
+
+@media screen and (max-width: 879px) 
+{
+  .explorer__add
+  {
+    width: calc(100vw - 11.875%);
+    margin-top: 36px;
+  }  
+}

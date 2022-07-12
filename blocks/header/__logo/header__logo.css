@@ -2,3 +2,13 @@
 {
   margin-top: 45px;
 }
+
+@media screen and (max-width:879px) 
+{
+  .header__logo
+  {
+    margin: 0;
+    margin-left: 8.4375%;
+    margin-top: 28px;
+  } 
+}

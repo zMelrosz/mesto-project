@@ -2,6 +2,7 @@
 {
   background-color: black;
   max-width: 1280px;
+  min-width: 320px;
   margin: auto;
   position: relative;
 }

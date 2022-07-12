@@ -9,3 +9,14 @@
   color: #fff;
   margin-top: 16px;
 }
+
+@media screen and (max-width: 879px) 
+{
+  .explorer__subtitle
+  {
+    margin: 0 auto;
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 17px;
+  }
+}
