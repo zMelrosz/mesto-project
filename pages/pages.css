@@ -15,12 +15,8 @@
 @import url(../blocks/cards/cards.css);
 @import url(../blocks/card/card.css);
 @import url(../blocks/card/__image/card__image.css);
-@import url(../blocks/card/__image/_karachaevsk/card__image_karachaevsk.css);
-@import url(../blocks/card/__image/_elbrus/card__image_elbrus.css);
-@import url(../blocks/card/__image/_dombai/card__image_dombai.css);
 @import url(../blocks/card/__info/card__info.css);
-@import url(../blocks/card/__like-checkbox/card__like-checkbox.css);
-@import url(../blocks/card/__like-heart/card__like-heart.css);
+@import url(../blocks/card/__like/card__like.css);
 @import url(../blocks/card/__name/card__name.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);

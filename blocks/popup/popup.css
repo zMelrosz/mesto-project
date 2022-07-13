@@ -1,18 +1,27 @@
 .popup
-{
-  background-color: black;
+{ 
   display: none;
+  position: fixed;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  z-index: 2;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 .popup::before
-{    
+{
   content: " ";
-  position: absolute;
-  background-color: #000;
+  background-color: black;
+  z-index: 1;
   bottom: 0;
   top: 0;
   left: 0;
   right: 0;
   opacity: 0.5;
+  position: fixed;
 }
-

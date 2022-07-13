@@ -1,7 +1,10 @@
 .card__image
 {
+  margin: 0;
+  border: none;
   width: 282px;
   height: 282px;
+  box-sizing: border-box;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }

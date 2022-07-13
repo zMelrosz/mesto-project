@@ -9,6 +9,7 @@
   background-position: center;
   margin-left: 18px;
   box-sizing: border-box;
+  background-color: black;
 }
 
 .explorer__edit:hover
