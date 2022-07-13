@@ -4,11 +4,13 @@
   margin: 0 auto;
   margin-top: 54px;
   border: none;
-  font-family: 'Inter';
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
   line-height: 17px;
+  padding-bottom: 13px;
+  border-bottom: 1px solid rgba(1, 1, 1, 0.2);
 }
 
 .popup__title-edit:focus
