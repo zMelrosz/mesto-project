@@ -3,7 +3,6 @@
   display: flex;
   flex-direction: column;
   min-width: 289px;
-  min-height: 330px;
   z-index: 3;
   margin: auto;
   align-self: center;

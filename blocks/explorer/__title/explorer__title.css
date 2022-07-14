@@ -16,7 +16,6 @@
 @media screen and (max-width: 879px) {
   .explorer__title {
     flex-wrap: nowrap;
-    font-family: 'Inter';
     font-size: 27px;
     line-height: 33px;
     max-width: 280px;

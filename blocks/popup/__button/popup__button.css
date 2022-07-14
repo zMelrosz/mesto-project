@@ -1,5 +1,7 @@
 .popup__button {
   margin: 0 auto;
+  border: none;
+  padding: 0;
   margin-top: 38px;
   width: 358px;
   height: 58px;
