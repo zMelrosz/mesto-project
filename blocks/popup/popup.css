@@ -1,5 +1,4 @@
-.popup
-{ 
+.popup {
   display: none;
   position: fixed;
   align-content: center;
@@ -13,8 +12,7 @@
   right: 0;
 }
 
-.popup::before
-{
+.popup::before {
   content: " ";
   background-color: black;
   z-index: 1;

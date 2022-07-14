@@ -1,5 +1,4 @@
-.explorer__add
-{
+.explorer__add {
   width: 150px;
   height: 50px;
   border: 2px solid white;
@@ -12,17 +11,14 @@
   border-radius: 2px;
 }
 
-.explorer__add:hover
-{
+.explorer__add:hover {
   opacity: 0.6;
   cursor: pointer;
 }
 
-@media screen and (max-width: 879px) 
-{
-  .explorer__add
-  {
+@media screen and (max-width: 879px) {
+  .explorer__add {
     width: calc(100vw - 11.875%);
     margin-top: 36px;
-  }  
+  }
 }

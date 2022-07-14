@@ -1,5 +1,4 @@
-.explorer__edit
-{
+.explorer__edit {
   width: 24px;
   height: 24px;
   border: 1px solid white;
@@ -9,19 +8,18 @@
   background-position: center;
   margin-left: 18px;
   box-sizing: border-box;
-  background-color: rgba(1, 1,1,0);
+  background-color: rgba(1, 1, 1, 0);
 }
 
-.explorer__edit:hover
-{
+.explorer__edit:hover {
   cursor: pointer;
   opacity: 0.6;
 }
 
-@media screen and (max-width: 879px)
-{
- .explorer__edit
- {
-  margin-left: 10px;
- }
+@media screen and (max-width: 879px) {
+  .explorer__edit {
+    width: 18px;
+    height: 18px;
+    margin-left: 10px;
+  }
 }

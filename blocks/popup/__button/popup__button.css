@@ -1,5 +1,4 @@
-.popup__button
-{
+.popup__button {
   margin: 0 auto;
   margin-top: 38px;
   width: 358px;
@@ -15,16 +14,13 @@
   border-radius: 2px;
 }
 
-.popup__button:hover
-{
+.popup__button:hover {
   cursor: pointer;
   opacity: 0.8;
 }
 
-@media screen and (max-width: 879px) 
-{
-  .popup__button
-  {
+@media screen and (max-width: 879px) {
+  .popup__button {
     width: calc(100vw - 25.625%);
     font-size: 14px;
     line-height: 17px;

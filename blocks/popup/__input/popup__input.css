@@ -1,8 +1,6 @@
-.popup__title-edit
-{
+.popup__input {
   width: 358px;
   margin: 0 auto;
-  margin-top: 54px;
   border: none;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
@@ -13,16 +11,12 @@
   border-bottom: 1px solid rgba(1, 1, 1, 0.2);
 }
 
-.popup__title-edit:focus
-{
+.popup__input {
   outline: none;
 }
 
-@media screen and (max-width: 879px) 
-{
-  .popup__title-edit
-  {
-    margin-top: 75px;
+@media screen and (max-width: 879px) {
+  .popup__input {
     width: calc(100vw - 25.625%);
   }
 }

@@ -1,14 +1,11 @@
-.header__line
-{
+.header__line {
   margin-top: 41px;
   border: 1px solid #545454;
-  opacity: 0.7; 
+  opacity: 0.7;
 }
 
-@media screen and (max-width:879px) 
-{
-  .header__line
-  {
+@media screen and (max-width:879px) {
+  .header__line {
     max-width: 100%;
-  } 
+  }
 }

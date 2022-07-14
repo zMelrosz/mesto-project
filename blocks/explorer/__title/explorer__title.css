@@ -1,7 +1,5 @@
-.explorer__title
-{
+.explorer__title {
   margin: 0;
-  display: flex;
   font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   text-align: center;
@@ -9,15 +7,18 @@
   font-size: 42px;
   line-height: 48px;
   color: #fff;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 440px;
 }
 
-@media screen and (max-width: 879px)
-{
-  .explorer__title
-  {
+@media screen and (max-width: 879px) {
+  .explorer__title {
     flex-wrap: nowrap;
     font-family: 'Inter';
     font-size: 27px;
     line-height: 33px;
-  }  
+    max-width: 280px;
+  }
 }

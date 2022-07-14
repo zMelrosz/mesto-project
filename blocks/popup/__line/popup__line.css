@@ -1,14 +1,11 @@
-.popup__line
-{
+.popup__line {
   width: 358px;
   border-top: 1px solid black;
   opacity: 0.2;
 }
 
-@media screen and (max-width: 879px) 
-{
-  .popup__line
-  {
+@media screen and (max-width: 879px) {
+  .popup__line {
     width: calc(100vw - 25.625%);
   }
 }

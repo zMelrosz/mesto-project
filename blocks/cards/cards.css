@@ -1,5 +1,4 @@
-.cards
-{
+.cards {
   margin: 0 auto;
   max-width: 880px;
   margin-top: 47.25px;
@@ -9,12 +8,10 @@
   column-gap: 17px;
 }
 
-@media screen and (max-width: 879px)
-{
- .cards
- {
-  margin-top: 36px;
-  grid-template-columns: repeat(1, 1fr);
-  justify-items: center;
- } 
+@media screen and (max-width: 879px) {
+  .cards {
+    margin-top: 36px;
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
+  }
 }

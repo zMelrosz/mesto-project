@@ -1,8 +1,7 @@
-.card__name
-{
+.card__name {
   margin: 0;
   margin-left: 20px;
-	font-family: Inter, Arial, Helvetica, sans-serif;
+  font-family: Inter, Arial, Helvetica, sans-serif;
   font-style: normal;
   font-weight: 900;
   font-size: 24px;
@@ -10,5 +9,5 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  max-width: 246px; 
+  max-width: 246px;
 }

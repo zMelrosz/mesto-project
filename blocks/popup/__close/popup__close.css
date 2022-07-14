@@ -1,30 +1,29 @@
-.popup__close
-{
-  position: absolute;
+.popup__close {
+  z-index: 4;
   width: 32px;
   height: 32px;
+  align-self: flex-end;
+  margin-bottom: 8px;
+  margin-left: 467px;
+  top: 0;
   background-image: url(../../../images/Close.svg);
-  right: -42px;
-  top: -42px;
+  background-color: rgba(1, 1, 1, 0);
+  border: none;
   box-sizing: border-box;
   background-position: center;
   background-size: cover;
 }
 
-.popup__close:hover
-{
+.popup__close:hover {
   cursor: pointer;
   opacity: 0.6;
 }
 
-@media screen and (max-width: 879px) 
-{
-  .popup__close
-  {
+@media screen and (max-width: 879px) {
+  .popup__close {
     width: 20px;
     height: 20px;
-    right: 0;
-    top: -36px;
-    z-index: 10;
+    margin: 0;
+    margin-bottom: 16px;
   }
 }
