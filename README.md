@@ -4,9 +4,10 @@
 
 ### Использованные технологии
 
-* HTML
-* CSS
-* Flexbox
-* Grid
-* БЭМ
+- HTML
+- CSS
+- Flexbox
+- Grid
+- БЭМ
 
+Ссылка: https://zmelrosz.github.io/mesto-project/index.html
