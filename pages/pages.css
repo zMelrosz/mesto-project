@@ -3,7 +3,6 @@
 @import url(../blocks/page/page.css);
 @import url(../blocks/header/header.css);
 @import url(../blocks/header/__logo/header__logo.css);
-@import url(../blocks/header/__line/header__line.css);
 @import url(../blocks/explorer/explorer.css);
 @import url(../blocks/explorer/__description/explorer__description.css);
 @import url(../blocks/explorer/__title-edit/explorer__title-edit.css);

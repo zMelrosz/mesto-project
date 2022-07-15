@@ -1,4 +1,4 @@
-.popup__input {
+.popup_input {
   width: 358px;
   margin: 0 auto;
   border: none;
@@ -9,36 +9,33 @@
   line-height: 17px;
   padding-bottom: 13px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-
-.popup__input {
   outline: none;
 }
 
 @media screen and (max-width: 879px) {
-  .popup__input {
+  .popup_input {
     width: calc(100vw - 25.625%);
   }
 }
 
-.popup__input:nth-of-type(1) {
+.popup_input:nth-of-type(1) {
   margin-top: 54px;
   /**/
 }
 
 @media screen and (max-width: 879px) {
-  .popup__input:nth-of-type(1) {
+  .popup_input:nth-of-type(1) {
     margin-top: 75px;
     /**/
   }
 }
 
-.popup__input:nth-of-type(2) {
+.popup_input:nth-of-type(2) {
   margin-top: 30px;
 }
 
 @media screen and (max-width: 879px) {
-  .popup__input:nth-of-type(2) {
+  .popup_input:nth-of-type(2) {
     margin-top: 22px;
   }
 }
