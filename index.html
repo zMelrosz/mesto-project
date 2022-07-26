@@ -94,12 +94,11 @@
       <p class="footer__text">© 2022 Mesto Russia</p>
     </footer>
 
-    <div class="popup">
+    <div class="popup popup_type_edit">
       <div class="popup__container">
         <button class="popup__close" type="button" aria-label="close"></button>
         <form class="popup__form" name="form">
           <h3 class="popup__title">Редактировать профиль</h3>
-          <!-- <label for="title">Имя</label> -->
           <input
             class="popup__input popup__input_edit_title"
             type="text"
@@ -109,7 +108,6 @@
             placeholder="Имя"
             value="Жак-Ив Кусто"
           />
-          <!-- <label for="subtitle">Должность</label> -->
           <input
             class="popup__input popup__input_edit_subtitle"
             type="text"
@@ -123,6 +121,43 @@
         </form>
       </div>
     </div>
+
+    <div class="popup popup_type_add" >
+      <div class="popup__container">
+        <button class="popup__close popup__close_type_add" type="button" aria-label="close"></button>
+        <form class="popup__form" name="form">
+          <h3 class="popup__title" id='popup-add-title'>Новое место</h3>
+          <input
+            class="popup__input popup__input_edit_name"
+            type="text"
+            required
+            id="title"
+            name="title-edit"
+            placeholder="Название"
+          />
+          <input
+            class="popup__input popup__input_edit_url"
+            type="text"
+            required
+            id="subtitle"
+            name="subtitle-edit"
+            placeholder="Ссылка на картинку"
+          />
+          <button class="popup__button" type="submit">Создать</button>
+        </form>
+      </div>
+    </div>
+
+  <template id="card-temp">
+    <div class="card">
+      <img class="card__image" src="  ">
+      <div class="card__info">
+        <h2 class="card__name"></h2>
+        <button type="button" class="card__like" aria-label="like"></button>
+      </div>
+    </div>
+  </template>
+
     <script src="./scripts/script.js"></script>
   </body>
 </html>
