@@ -24,7 +24,18 @@ let popupAddUrlInput = popupAddForm.querySelector('.popup__input_edit_url');
 
 //----------cards----------
 let cardsContainer = main.querySelector('.cards');
-// let cardDelete = cardsContainer.querySelectorAll('.card__delete');
+
+// old cards like listener
+const existCards = cardsContainer.querySelectorAll('.card');
+for (i=0; i<existCards.length; i++)
+{
+  let cardExistLike = existCards[i].querySelector('.card__like');
+  cardExistLike.addEventListener('click', function (evt)
+  {
+    let chooseLike = evt.target;
+    chooseLike.classList.toggle('card_liked');
+  });
+}
 
 function addCard(cardName, cardImg)
 {
@@ -33,9 +44,27 @@ function addCard(cardName, cardImg)
   let cardClone = cardTemp.querySelector('.card').cloneNode(true);
   
   cardClone.querySelector('.card__name').textContent = cardName; // set card title
-  cardClone.querySelector('.card__image').src=cardImg; //set img
+  cardClone.querySelector('.card__image').src = cardImg; //set img
+
+
+  //add cards like listener
+  let cloneLike = cardClone.querySelector('.card__like'); 
+  cloneLike.addEventListener('click', function(evt) 
+    {
+    let chooseLike = evt.target;
+    chooseLike.classList.toggle('card_liked');
+    });
+
+    let cardDelete = cardClone.querySelector('.card__delete');
+    cardDelete.addEventListener('click', function(evt)
+    {
+      let chosenDelete = evt.target;
+      chosenDelete.closest('.card').remove();
+    })
 
   cardsContainer.prepend(cardClone);
+
+  
   
 }
 
@@ -136,16 +165,7 @@ function formSubmitHandler (evt) //popup edit func
 
 popupEditForm.addEventListener('submit', formSubmitHandler);
 
-log(cardLike.length);
-for (i=0; i < cardLike.length; i++)
-{
-cardLike[i].addEventListener('click', function(evt)
-{
-  let chooseLike = evt.target;
-  chooseLike.classList.toggle('card_liked');
-});
-}
-
+// old cards delete listener
 let cardDelete = cardsContainer.querySelectorAll('.card__delete');
 log(cardDelete[0]);
 
