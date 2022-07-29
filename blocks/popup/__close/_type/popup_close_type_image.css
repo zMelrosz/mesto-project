@@ -1,0 +1,6 @@
+.popup__close_type_image
+{ 
+  position: absolute;
+  right: -40px;
+  top: -40px;
+}
