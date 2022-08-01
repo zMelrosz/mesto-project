@@ -27,7 +27,6 @@ let popupAddUrlInput = popupAddForm.querySelector('.popup__input_edit_url');
 //----------cards----------
 let cardsContainer = main.querySelector('.cards');
 let cardImages = cardsContainer.querySelectorAll('.card__image');
-console.log(cardImages);
 
 // old cards like listener
 const existCards = cardsContainer.querySelectorAll('.card');
@@ -65,7 +64,7 @@ function listenChosenImage(evt)
   popupImage.classList.toggle('popup_opened');
   let chosenImage = popupImage.querySelector('.card__image');
   chosenImage.src = imageSrc;
-  popupImageCloser.addEventListener('click', popupImageToggle);
+  popupImageCloser.addEventListener('click', popupToggle);
 }
 
 function addCard(cardName, imageSrc)
@@ -154,41 +153,45 @@ function popupEditToggle()
   popupEdit.classList.toggle('popup_opened');
 }
 
-function popupAddToggle()
+ function popupAddToggle()
 {
   popupAdd.classList.toggle('popup_opened');
 }
 
-function popupImageToggle()
+ function popupImageToggle()
 {
   popupImage.classList.toggle('popup_opened');
 }
 
-//clickListeners
-explorerEditButton.addEventListener('click', popupEditToggle);
-popupEditCloseButton.addEventListener('click', popupEditToggle);
-addCardButton.addEventListener('click', popupAddToggle);
-addCardClose.addEventListener('click', popupAddToggle);
 
+function popupToggle(evt) //universal not ready
+{
+  let targetClose = evt.target;
+  
+  targetClose.parentElement.parentElement.classList.toggle('popup_opened');
+}
+
+// clickListeners
+explorerEditButton.addEventListener('click', popupEditToggle); 
+popupEditCloseButton.addEventListener('click', popupToggle);
+addCardButton.addEventListener('click', popupAddToggle);
+addCardClose.addEventListener('click', popupToggle);
 
 function log(log)
 {
   console.log(log);
 }
 
-function formSubmitHandler (evt) //popup edit func
+function formSubmitHandler (evt)
 {
   evt.preventDefault();
 
-  // Получите значение полей jobInput и nameInput из свойства value
   let titleInputValue = titleInput.value;
   let subtitleInputValue = subtitleInput.value;
-  // Выберите элементы, куда должны быть вставлены значения полей
+
   let newTitleInputValue = titleInputValue;
   let newSubtitleInputValue = subtitleInputValue;
 
-
-  // Вставьте новые значения с помощью textContent
   titleInput.textContent = newTitleInputValue;
   subtitleInput.textContent = newSubtitleInputValue;
   explorerTitle.textContent = newTitleInputValue;
