@@ -13,6 +13,7 @@ const addCardButton = page.querySelector('.explorer__add');
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 const popupImage = page.querySelector('.popup_type_image');
+const chosenImage = popupImage.querySelector('.card__image');
 
 //popupClosers
 const popupImageCloser = popupImage.querySelector('.popup__close');
@@ -58,8 +59,7 @@ function listenChosenImage(evt)
   const imageSrc = clickedImage.src;
   const imageCaption = clickedImage.closest('.card').querySelector('.card__name').textContent;
   openPopup(popupImage);
-  const chosenImage = popupImage.querySelector('.card__image');
-  let chosenImageCaption = popupImage.querySelector('.card__image-caption');
+  const chosenImageCaption = popupImage.querySelector('.card__image-caption');
   chosenImage.src = imageSrc;
   chosenImage.alt = 'Пейзаж';
   chosenImageCaption.textContent = imageCaption;
@@ -77,17 +77,17 @@ function createCard(cardName, imageSrc)
   cloneImage.addEventListener('click', listenChosenImage); // set image bigger listener
 
   //add cards like listener
-  let cloneLike = cardClone.querySelector('.card__like'); 
+  const cloneLike = cardClone.querySelector('.card__like'); 
   cloneLike.addEventListener('click', function(evt) 
     {
-      let chooseLike = evt.target;
+      const chooseLike = evt.target;
       chooseLike.classList.toggle('card_liked');
     });
 
-    let cardDelete = cardClone.querySelector('.card__delete');
+    const cardDelete = cardClone.querySelector('.card__delete');
     cardDelete.addEventListener('click', function(evt)
     {
-      let chosenDelete = evt.target;
+      const chosenDelete = evt.target;
       chosenDelete.closest('.card').remove();
     });
 
@@ -159,9 +159,9 @@ function popupEditToggle()
 }
 
 // popup open listeners
-explorerEditButton.addEventListener('click', function ()
+explorerEditButton.addEventListener('click', function () // Будьте любезны, прочтите, пожалуйста html файл или откройте попап, в таком случае, вы обнаружите, что в инпутах value данные уже есть, а меняются они с помощью "ручки", таким образом, я не понимаю, что от меня требуется, если я не прав опишите подробнее пожалуйста. Наставник в слаке говорит что-то про textcontent, но я совершенно не понимаю как это связано, ведь фича - работает!!!
 { 
-  openPopup(popupEdit);
+  openPopup(popupEdit); 
 });
 
 addCardButton.addEventListener('click', function()
@@ -174,24 +174,24 @@ function log(log)
   console.log(log);
 }
 
-function formSubmitHandler (evt) // Всё происходит ровно так как описано в ошибке, в чём проблема - не пойму!
+function changeExplorerInfo (evt)
 {
   evt.preventDefault();
 
-  let titleInputValue = titleInput.value; 
-  let subtitleInputValue = subtitleInput.value; 
+  const titleInputValue = titleInput.value; 
+  const subtitleInputValue = subtitleInput.value; 
 
-  let newTitleInputValue = titleInputValue; 
-  let newSubtitleInputValue = subtitleInputValue; 
+  const newTitleInputValue = titleInputValue; 
+  const newSubtitleInputValue = subtitleInputValue; 
 
   titleInput.textContent = newTitleInputValue; 
   subtitleInput.textContent = newSubtitleInputValue;
   explorerTitle.textContent = newTitleInputValue;
   explorerSubtitle.textContent = newSubtitleInputValue;
-  let nearestPopup = evt.target.closest('.popup');
+  const nearestPopup = evt.target.closest('.popup');
   closePopup(nearestPopup);
 }
 
-popupEditForm.addEventListener('submit', formSubmitHandler);
+popupEditForm.addEventListener('submit', changeExplorerInfo);
 
 
