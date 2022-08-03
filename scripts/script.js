@@ -57,14 +57,12 @@ function listenChosenImage(evt)
   const clickedImage = evt.target;
   const imageSrc = clickedImage.src;
   const imageCaption = clickedImage.closest('.card').querySelector('.card__name').textContent;
-  console.log(imageCaption);
   openPopup(popupImage);
   const chosenImage = popupImage.querySelector('.card__image');
   let chosenImageCaption = popupImage.querySelector('.card__image-caption');
   chosenImage.src = imageSrc;
   chosenImage.alt = 'Пейзаж';
   chosenImageCaption.textContent = imageCaption;
-  console.log(chosenImageCaption);
 }
 
 function createCard(cardName, imageSrc)
