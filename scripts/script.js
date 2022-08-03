@@ -1,82 +1,74 @@
-let page = document.querySelector('.page'); //pageObj
-let main = page.querySelector('main'); //mainObj
+const page = document.querySelector('.page'); //pageObj
+const main = page.querySelector('main'); //mainObj
 
 //explorer
-let explorerEditButton = main.querySelector('.explorer').querySelector('.explorer__person').querySelector('.explorer__description').querySelector('.explorer__title-edit').querySelector('.explorer__edit');
-let explorerTitle = main.querySelector('.explorer').querySelector('.explorer__person').querySelector('.explorer__description').querySelector('.explorer__title-edit').querySelector('.explorer__title');
-let explorerSubtitle = main.querySelector('.explorer').querySelector('.explorer__person').querySelector('.explorer__description').querySelector('.explorer__subtitle'); 
+const explorerEditButton = main.querySelector('.explorer__edit');
+const explorerTitle = main.querySelector('.explorer__title');
+const explorerSubtitle = main.querySelector('.explorer__subtitle'); 
 
 //popupAdd
 const addCardButton = page.querySelector('.explorer__add');
-const addCardClose = page.querySelector('.popup__close_type_add');
 
 //popup edit vars
 const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 const popupImage = page.querySelector('.popup_type_image');
+
+//popupClosers
 const popupImageCloser = popupImage.querySelector('.popup__close');
-const popupEditCloseButton = popupEdit.querySelector('.popup__container').querySelector('.popup__close');
-const popupEditForm = popupEdit.querySelector('.popup__container').querySelector('.popup__form');
-let titleInput = popupEditForm.querySelector('.popup__input_edit_title');
-let subtitleInput = popupEditForm.querySelector('.popup__input_edit_subtitle');
+const popupClosers = page.querySelectorAll('.popup__close');
+
+const popupEditForm = popupEdit.querySelector('.popup__container');
+const titleInput = popupEditForm.querySelector('.popup__input_edit_title');
+const subtitleInput = popupEditForm.querySelector('.popup__input_edit_subtitle');
 const popupAddForm = page.querySelector('.popup_type_add');
-let popupAddNameInput = popupAddForm.querySelector('.popup__input_edit_name');
-let popupAddUrlInput = popupAddForm.querySelector('.popup__input_edit_url');
+const popupAddNameInput = popupAddForm.querySelector('.popup__input_edit_name');
+const popupAddUrlInput = popupAddForm.querySelector('.popup__input_edit_url');
 
 
 //----------cards----------
-let cardsContainer = main.querySelector('.cards');
-let cardImages = cardsContainer.querySelectorAll('.card__image');
+const cardsContainer = main.querySelector('.cards');
+const cardImages = cardsContainer.querySelectorAll('.card__image');
+const cardLike = cardsContainer.querySelectorAll('.card__like'); 
+const cardTemp = document.querySelector('#card-temp').content;
 
-// old cards like listener
-const existCards = cardsContainer.querySelectorAll('.card');
-for (i=0; i<existCards.length; i++)
+// put closers
+function closePopup(popup)
 {
-  let cardExistLike = existCards[i].querySelector('.card__like');
-  cardExistLike.addEventListener('click', function (evt)
-  {
-    let chooseLike = evt.target;
-    chooseLike.classList.toggle('card_liked');
-  });
+  popup.classList.remove('popup_opened');
 }
 
-// old cards delete listener
-let cardDelete = cardsContainer.querySelectorAll('.card__delete');
-
-for (i=0; i<cardDelete.length; i++)
+popupClosers.forEach(function (closer)
 {
-  cardDelete[i].addEventListener('click', function(evt)
-  {
-    let chosenDelete = evt.target;
-    chosenDelete.closest('.card').remove();
-  });
-}
-
-// old cards bigger listener
-cardImages.forEach(element => {
-  element.addEventListener('click', listenChosenImage);
+  const popup = closer.closest('.popup');
+  closer.addEventListener('click', () => closePopup(popup));
 });
+
+//----------------------------------------------------------------
+
+function openPopup(popup)
+{
+  popup.classList.add('popup_opened');
+}
 
 // cards bigger
 function listenChosenImage(evt)
 {
-  let imageSrc = evt.target.src;
-  popupImage.classList.toggle('popup_opened');
-  let chosenImage = popupImage.querySelector('.card__image');
+  const imageSrc = evt.target.src;
+  openPopup(popupImage);
+  const chosenImage = popupImage.querySelector('.card__image');
   chosenImage.src = imageSrc;
-  popupImageCloser.addEventListener('click', popupToggle);
+  chosenImage.alt = 'Пейзаж';
 }
 
-function addCard(cardName, imageSrc)
+function createCard(cardName, imageSrc)
 {
-  
-  const cardTemp = document.querySelector('#card-temp').content;
   const cardClone = cardTemp.querySelector('.card').cloneNode(true);
-  
+
   cardClone.querySelector('.card__name').textContent = cardName; // set card title
   cardClone.querySelector('.card__image').src = imageSrc; //set img
+  cardClone.querySelector('.card__image').alt = 'Пейзаж'; 
   const cloneImage = cardClone.querySelector('.card__image');
-  
 
   cloneImage.addEventListener('click', listenChosenImage); // set image bigger listener
 
@@ -84,8 +76,8 @@ function addCard(cardName, imageSrc)
   let cloneLike = cardClone.querySelector('.card__like'); 
   cloneLike.addEventListener('click', function(evt) 
     {
-    let chooseLike = evt.target;
-    chooseLike.classList.toggle('card_liked');
+      let chooseLike = evt.target;
+      chooseLike.classList.toggle('card_liked');
     });
 
     let cardDelete = cardClone.querySelector('.card__delete');
@@ -95,7 +87,7 @@ function addCard(cardName, imageSrc)
       chosenDelete.closest('.card').remove();
     });
 
-  cardsContainer.prepend(cardClone); 
+    return cardClone;
 }
 
 
@@ -126,26 +118,25 @@ const initialCards = [
   }
 ];
 
-for (i=0; i < initialCards.length; i++)
-{
-  addCard(initialCards[i].name, initialCards[i].link)
-}
-
-let cardLike = cardsContainer.querySelectorAll('.card__like'); 
-
-function cardToContainer(evt)
+function putCardToContainer(evt)
 {
   evt.preventDefault();
 
-  let cardNameInputValue = popupAddNameInput.value;
-  let cardUrlInputValue = popupAddUrlInput.value;
-
-  addCard(cardNameInputValue, cardUrlInputValue);
-  cardLike = cardsContainer.querySelectorAll('.card__like');
-  popupAddToggle();
+  const cardNameInputValue = popupAddNameInput.value;
+  const cardUrlInputValue = popupAddUrlInput.value;
+  const newCard = createCard(cardNameInputValue, cardUrlInputValue);
+  cardsContainer.prepend(newCard);
+  const nearestPopup = evt.target.closest('.popup');
+  closePopup(nearestPopup);
 }
 
-popupAddForm.addEventListener('submit', cardToContainer);
+initialCards.forEach(function (card)
+{
+  const initialCard = createCard(card.name, card.link);
+  cardsContainer.prepend(initialCard);
+});
+
+popupAddForm.addEventListener('submit', putCardToContainer);
 
 // popup events
 function popupEditToggle()
@@ -163,40 +154,38 @@ function popupEditToggle()
   popupImage.classList.toggle('popup_opened');
 }
 
+// popup open listeners
+explorerEditButton.addEventListener('click', function ()
+{ 
+  openPopup(popupEdit);
+});
 
-function popupToggle(evt) //universal not ready
+addCardButton.addEventListener('click', function()
 {
-  let targetClose = evt.target;
-  
-  targetClose.parentElement.parentElement.classList.toggle('popup_opened');
-}
-
-// clickListeners
-explorerEditButton.addEventListener('click', popupEditToggle); 
-popupEditCloseButton.addEventListener('click', popupToggle);
-addCardButton.addEventListener('click', popupAddToggle);
-addCardClose.addEventListener('click', popupToggle);
+  openPopup(popupAdd);
+});
 
 function log(log)
 {
   console.log(log);
 }
 
-function formSubmitHandler (evt)
+function formSubmitHandler (evt) // Всё происходит ровно так как описано в ошибке, в чём проблема - не пойму!
 {
   evt.preventDefault();
 
-  let titleInputValue = titleInput.value;
-  let subtitleInputValue = subtitleInput.value;
+  let titleInputValue = titleInput.value; 
+  let subtitleInputValue = subtitleInput.value; 
 
-  let newTitleInputValue = titleInputValue;
-  let newSubtitleInputValue = subtitleInputValue;
+  let newTitleInputValue = titleInputValue; 
+  let newSubtitleInputValue = subtitleInputValue; 
 
-  titleInput.textContent = newTitleInputValue;
+  titleInput.textContent = newTitleInputValue; 
   subtitleInput.textContent = newSubtitleInputValue;
   explorerTitle.textContent = newTitleInputValue;
   explorerSubtitle.textContent = newSubtitleInputValue;
-  popupEditToggle();
+  let nearestPopup = evt.target.closest('.popup');
+  closePopup(nearestPopup);
 }
 
 popupEditForm.addEventListener('submit', formSubmitHandler);
