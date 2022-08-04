@@ -14,6 +14,7 @@ const popupEdit = page.querySelector('.popup_type_edit');
 const popupAdd = page.querySelector('.popup_type_add');
 const popupImage = page.querySelector('.popup_type_image');
 const chosenImage = popupImage.querySelector('.card__image');
+const chosenImageCaption = popupImage.querySelector('.card__image-caption');
 
 //popupClosers
 const popupImageCloser = popupImage.querySelector('.popup__close');
@@ -59,7 +60,6 @@ function listenChosenImage(evt)
   const imageSrc = clickedImage.src;
   const imageCaption = clickedImage.closest('.card').querySelector('.card__name').textContent;
   openPopup(popupImage);
-  const chosenImageCaption = popupImage.querySelector('.card__image-caption');
   chosenImage.src = imageSrc;
   chosenImage.alt = 'Пейзаж';
   chosenImageCaption.textContent = imageCaption;
@@ -159,8 +159,10 @@ function popupEditToggle()
 }
 
 // popup open listeners
-explorerEditButton.addEventListener('click', function () // Будьте любезны, прочтите, пожалуйста html файл или откройте попап, в таком случае, вы обнаружите, что в инпутах value данные уже есть, а меняются они с помощью "ручки", таким образом, я не понимаю, что от меня требуется, если я не прав опишите подробнее пожалуйста. Наставник в слаке говорит что-то про textcontent, но я совершенно не понимаю как это связано, ведь фича - работает!!!
+explorerEditButton.addEventListener('click', function () // Благодарю
 { 
+  titleInput.value = explorerTitle.textContent;
+  subtitleInput.value = explorerSubtitle.textContent;
   openPopup(popupEdit); 
 });
 
