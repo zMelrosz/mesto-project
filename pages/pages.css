@@ -37,3 +37,4 @@
 @import url(../blocks/card/_liked/card_liked.css);
 @import url(../blocks/card/__delete/card__delete.css);
 @import url(../blocks/popup/__container/_type/popup__container_type_image.css);
+@import url(../blocks/popup/__input/_edit/popup__input_type_error.css);

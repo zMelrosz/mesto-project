@@ -10,7 +10,6 @@
   <body class="page">
     <header class="header">
       <img class="header__logo" alt="Логотип" src="./images/logo.svg" />
-      <!-- <hr class="header__line"> -->
     </header>
 
     <main>
@@ -45,7 +44,8 @@
         <form class="popup__form" name="form">
           <h3 class="popup__title">Редактировать профиль</h3>
           <input
-            class="popup__input popup__input_edit_title"
+            class="popup__input popup__input_edit_title "
+            id="name-input"
             type="text"
             required
             id="title"
@@ -53,6 +53,7 @@
             placeholder="Имя"
             value=""
           />
+          <span class="popup__input_type_error-message">А не охуел ли ты поц????</span>
           <input
             class="popup__input popup__input_edit_subtitle"
             type="text"
@@ -70,7 +71,7 @@
     <div class="popup popup_type_add" >
       <div class="popup__container">
         <button class="popup__close popup__close_type_add" type="button" aria-label="close"></button>
-        <form class="popup__form" name="form">
+        <form class="popup__form" name="form" novalidate>
           <h3 class="popup__title" id='popup-add-title'>Новое место</h3>
           <input
             class="popup__input popup__input_edit_name"

@@ -34,6 +34,45 @@ const cardImages = cardsContainer.querySelectorAll('.card__image');
 const cardLike = cardsContainer.querySelectorAll('.card__like'); 
 const cardTemp = document.querySelector('#card-temp').content;
 
+//forms
+
+const editForm = document.querySelector('.popup__form');
+const editFormInput = editForm.querySelector('.popup__input');
+const formError = editForm.querySelector(`.${editFormInput.id}-error`);
+console.log(formError);
+
+function showInputError(input)
+{
+  editFormInput.classList.add('popup__input_type_error');
+}
+
+function hideInputError(input)
+{
+  editFormInput.classList.remove('popup__input_type_error');
+}
+
+function isValid(input)
+{
+  if(!editFormInput.validity.valid)
+  {
+    showInputError(editFormInput);
+    console.log('show');
+  }
+  else
+  {
+    hideInputError(editFormInput);
+    console.log('hidden');
+  }
+}
+
+editFormInput.addEventListener('input', function (evt)
+{
+  console.log(evt.target.validity.valid);
+});
+
+editFormInput.addEventListener('input', isValid);
+
+
 // put closers
 function closePopup(popup)
 {
@@ -186,7 +225,7 @@ function changeExplorerInfo (evt)
   const newTitleInputValue = titleInputValue; 
   const newSubtitleInputValue = subtitleInputValue; 
 
-  titleInput.textContent = newTitleInputValue; 
+  titleInput.textContent = newTitleInputValue;
   subtitleInput.textContent = newSubtitleInputValue;
   explorerTitle.textContent = newTitleInputValue;
   explorerSubtitle.textContent = newSubtitleInputValue;
