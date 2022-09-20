@@ -56,12 +56,12 @@ function isValid(input)
   if(!editFormInput.validity.valid)
   {
     showInputError(editFormInput);
-    console.log('show');
+    formError.classList.add('popup__input-error_active');
   }
   else
   {
+    formError.classList.remove('popup__input-error_active');
     hideInputError(editFormInput);
-    console.log('hidden');
   }
 }
 
