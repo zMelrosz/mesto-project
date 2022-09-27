@@ -1,6 +1,7 @@
 .popup__input-error
 {
   display: none;
+  color: red;
   margin-left: 7.906976744186047%;
 }
 
