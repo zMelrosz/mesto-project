@@ -47,23 +47,28 @@
             class="popup__input popup__input_edit_title "
             id="name-input"
             type="text"
+            minlength="2"
+            maxlength="40"
             required
             id="title"
             name="title-edit"
             placeholder="Имя"
             value=""
           />
-          <span class="name-input-error popup__input-error ">А не охуел ли ты поц????</span>
+          <span class="name-input-error popup__input-error ">Всё нормально, бро, я работаю.</span>
           <input
             class="popup__input popup__input_edit_subtitle"
             type="text"
+            minlength="2"
+            maxlength="200"
             required
-            id="subtitle"
+            id="subtitle-input"
             name="subtitle-edit"
             placeholder="Должность"
             value=""
           />
-          <button class="popup__button" type="submit">Сохранить</button>
+          <span class="subtitle-input-error popup__input-error">Я тоже работаю</span>
+          <button class="popup__button " type="submit">Сохранить</button>
         </form>
       </div>
     </div>
@@ -76,20 +81,24 @@
           <input
             class="popup__input popup__input_edit_name"
             type="text"
+            minlength="2"
+            maxlength="30"
             required
-            id="title"
+            id="name-input"
             name="title-edit"
             placeholder="Название"
           />
+          <span class="name-input-error popup__input-error">Я тоже работаю</span>
           <input
             class="popup__input popup__input_edit_url"
-            type="text"
+            type="url"
             required
-            id="subtitle"
+            id="url-input"
             name="subtitle-edit"
             placeholder="Ссылка на картинку"
           />
-          <button class="popup__button" type="submit">Создать</button>
+          <span class="url-input-error popup__input-error">Я урл и я работаю</span>
+          <button class="popup__button popup__button_inactive" disabled type="submit">Создать</button>
         </form>
       </div>
     </div>
@@ -116,6 +125,9 @@
     </div>
   </template>
 
-    <script src="./scripts/script.js"></script>
+    <script src="./scripts/index.js" type="module"></script>
+    <script src="./scripts/card.js" type="module"></script>
+    <script src="./scripts/modal.js" type="module"></script>
+    <script src="./scripts/validate.js" type="module"></script>
   </body>
 </html>
