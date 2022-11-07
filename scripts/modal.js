@@ -14,6 +14,8 @@ const popupClosers = page.querySelectorAll('.popup__close');
 const popupEditForm = popupEdit.querySelector('.popup__container');
 const popupAddForm = page.querySelector('.popup_type_add');
 
+const popups = document.querySelectorAll('.popup');
+
 
 // put closers
 function closePopup(popup)
@@ -21,42 +23,38 @@ function closePopup(popup)
   popup.classList.remove('popup_opened');
 }
 
-function clickedElement(element)
-{
-  console.log(element.classList);
-}
 
-  const popups = document.querySelectorAll('.popup');
-  popups.forEach(function(popup)
+popups.forEach(function(popup)
+ {
+   popup.addEventListener('click', function(evt)
+   {
+     if (evt.target.classList.contains('popup'))
+     {
+       closePopup(evt.target);
+     }
+   })
+ });
+
+
+document.addEventListener('keydown', function(evt)
+{
+  if (evt.key === 'Escape')
   {
-    popup.addEventListener('click', function(evt)
+      popups.forEach(function (popup)
     {
-      if (evt.target.classList.contains('popup'))
+      if (popup.classList.contains('popup_opened'))
       {
-        console.log('yes');
+        closePopup(popup);
       }
-      else console.log('no');
-      
-    })
-  });
-
-
-popupAdd.addEventListener('keydown', function()
-{
-  console.log('keydown');
-})
+    });
+  }
+});
 
 //----------------------------------------------------------------
 
 function openPopup(popup)
 {
   popup.classList.add('popup_opened');
-}
-
-// popup events
-function popupEditToggle()
-{
-  popupEdit.classList.toggle('popup_opened');
 }
 
 export {popupAddForm, popupEditForm, openPopup, popupImage, popupAdd, closePopup, popupEdit};
