@@ -3,6 +3,7 @@ import {putCardToContainer, putInitialCards, addCardButton} from "./card.js";
 import {popupAddForm, popupEditForm, openPopup, popupAdd, popupEdit, closePopup} from "./modal.js";
 import {enableValidation, editFormInput, isValid} from "./validate.js";
 import { changeExplorerInfo } from "./utils.js"; 
+import '../pages/pages.css' // импортировали главный файл стилей
 
 const page = document.querySelector('.page'); //pageObj
 const main = page.querySelector('main'); //mainOb
