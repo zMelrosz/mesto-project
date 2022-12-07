@@ -15,8 +15,6 @@ const explorerSubtitle = main.querySelector('.explorer__subtitle');
 //enable validation
 enableValidation();
 
-editFormInput.addEventListener('input', isValid);
-
 //add initial cards
 popupAddForm.addEventListener('submit', putCardToContainer);
 putInitialCards();
@@ -50,3 +48,4 @@ allClosers.forEach(function(closer)
   });
 });
 
+export {popupEditForm, explorerTitle, explorerSubtitle};

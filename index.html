@@ -54,6 +54,8 @@
             name="title-edit"
             placeholder="Имя"
             value=""
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+            pattern="^[a-zA-ZА-Яа-я\-\s]+$"
           />
           <span class="name-input-error popup__input-error ">Всё нормально, бро, я работаю.</span>
           <input
@@ -66,6 +68,8 @@
             name="subtitle-edit"
             placeholder="Должность"
             value=""
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+            pattern="^[a-zA-ZА-Яа-я\-\s]+$"
           />
           <span class="subtitle-input-error popup__input-error">Я тоже работаю</span>
           <button class="popup__button " type="submit">Сохранить</button>
@@ -87,6 +91,9 @@
             id="name-input"
             name="title-edit"
             placeholder="Название"
+            data-error-message="Разрешены только латинские буквы, кириллические буквы, знаки дефиса и пробелы"
+            pattern="^[a-zA-ZА-Яа-я\-\s]+$"
+
           />
           <span class="name-input-error popup__input-error">Я тоже работаю</span>
           <input

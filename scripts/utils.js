@@ -1,3 +1,6 @@
+import { popupEditForm, explorerTitle, explorerSubtitle} from "./index.js"; 
+import {closePopup} from "./modal.js"
+
 function changeExplorerInfo (evt)
 {
   evt.preventDefault();
