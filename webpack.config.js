@@ -5,11 +5,11 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin'); // подклю
 
 module.exports =
 {
-    entry: { main: './scripts/index.js' }, //ТОЧКА ВХОДА
+    entry: { main: './src/scripts/index.js' }, //ТОЧКА ВХОДА
 
     output:  // ТОЧКА ВЫХОДА: путь, имя, свойство обновления путей внутри ксс и хтмл
     {
-        path: path.resolve(__dirname, 'dist'), // ссылка на текущую папку и относительный путь к точке выхода
+        path: path.resolve(__dirname, '../dist'), // ссылка на текущую папку и относительный путь к точке выхода
         filename: 'main.js',
         publicPath: ''
     },
@@ -17,7 +17,7 @@ module.exports =
     mode: 'development', // режим разработчика
     devServer:
     {
-        static: path.resolve(__dirname, './dist'), // путь, куда "смотрит" режим разработчика
+        static: path.resolve(__dirname, '../dist'), // путь, куда "смотрит" режим разработчика
         compress: true, // это ускорит загрузку в режиме разработки
         port: 8080, // порт, чтобы открывать сайт по адресу localhost:8080, но можно поменять порт
 
@@ -58,7 +58,7 @@ module.exports =
         new HtmlWebpackPlugin
         (
             {
-                template: './index.html' // путь к index.html
+                template: './src/index.html' // путь к index.html
             }
         ),
         new CleanWebpackPlugin(), // использовали плагин без настройки
