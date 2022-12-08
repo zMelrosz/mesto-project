@@ -1,10 +1,13 @@
 import { openPopup, popupImage, popupAddForm, closePopup} from "./modal.js";
+//import {toggleButtonState} from "./validate.js";
 
 //----------cards----------
 const page = document.querySelector('.page'); //pageObj
 const main = page.querySelector('main');
 const cardsContainer = main.querySelector('.cards');
 const addCardButton = page.querySelector('.explorer__add');
+const popupAddNameInput = popupAddForm.querySelector('.popup__input_edit_name');
+const popupAddUrlInput = popupAddForm.querySelector('.popup__input_edit_url');
 
 // cards bigger
 function listenChosenImage(evt)
@@ -24,11 +27,12 @@ function createCard(cardName, imageSrc)
 {
   const cardTemp = document.querySelector('#card-temp').content;
   const cardClone = cardTemp.querySelector('.card').cloneNode(true);
-
-  cardClone.querySelector('.card__name').textContent = cardName; // set card title
-  cardClone.querySelector('.card__image').src = imageSrc; //set img
-  cardClone.querySelector('.card__image').alt = 'Пейзаж'; 
   const cloneImage = cardClone.querySelector('.card__image');
+
+  cardClone.querySelector('.card__name').textContent = cardName;
+  cloneImage.src = imageSrc;
+  cloneImage.alt = 'Пейзаж'; 
+  
 
   cloneImage.addEventListener('click', listenChosenImage); // set image bigger listener
 
@@ -81,14 +85,16 @@ const initialCards = [
 function putCardToContainer(evt)
 {
   evt.preventDefault();
-  const popupAddNameInput = popupAddForm.querySelector('.popup__input_edit_name');
-  const popupAddUrlInput = popupAddForm.querySelector('.popup__input_edit_url');
   const cardNameInputValue = popupAddNameInput.value;
   const cardUrlInputValue = popupAddUrlInput.value;
   const newCard = createCard(cardNameInputValue, cardUrlInputValue);
   cardsContainer.prepend(newCard);
   const nearestPopup = evt.target.closest('.popup');
   closePopup(nearestPopup);
+  popupAddNameInput.value = '';
+  popupAddUrlInput.value = '';
+  nearestPopup.querySelector('.popup__button').disabled = true;
+  nearestPopup.querySelector('.popup__button').classList.add('popup__button_inactive');
 }
 
 function putInitialCards()

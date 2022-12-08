@@ -1,7 +1,7 @@
 
 import {putCardToContainer, putInitialCards, addCardButton} from "./card.js";
 import {popupAddForm, popupEditForm, openPopup, popupAdd, popupEdit, closePopup} from "./modal.js";
-import {enableValidation, editFormInput, isValid} from "./validate.js";
+import {enableValidation, classes} from "./validate.js";
 import { changeExplorerInfo } from "./utils.js"; 
 import '../pages/pages.css' // импортировали главный файл стилей
 
@@ -14,7 +14,7 @@ const explorerTitle = main.querySelector('.explorer__title');
 const explorerSubtitle = main.querySelector('.explorer__subtitle'); 
 
 //enable validation
-enableValidation();
+enableValidation(classes.formClass);
 
 //add initial cards
 popupAddForm.addEventListener('submit', putCardToContainer);
