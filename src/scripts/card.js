@@ -1,5 +1,4 @@
 import { openPopup, popupImage, popupAddForm, closePopup } from "./modal.js";
-//import {toggleButtonState} from "./validate.js";
 
 //----------cards----------
 const page = document.querySelector(".page"); //pageObj
@@ -88,10 +87,8 @@ function putCardToContainer(evt) {
   closePopup(nearestPopup);
   popupAddNameInput.value = "";
   popupAddUrlInput.value = "";
-  nearestPopup.querySelector(".popup__button").disabled = true;
-  nearestPopup
-    .querySelector(".popup__button")
-    .classList.add("popup__button_inactive");
+  nearestPopup.querySelector(".popup__button").disabled = true; //ищется кнопка конкретного попапа, я не представляю, как это можно реализовать по-другому
+  evt.submitter.classList.add("popup__button_inactive");
 }
 
 function putInitialCards() {

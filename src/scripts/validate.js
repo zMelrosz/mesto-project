@@ -6,6 +6,7 @@ const classes = {
   popupButtonClass: ".popup__button",
   inputErrorClass: "popup__input_type_error",
   inputActiveErrorClass: "popup__input-error_active",
+  inactiveButtonClass: "popup__button_inactive",
 };
 
 function showInputError(
@@ -33,7 +34,7 @@ function hideInputError(
   errorElement.textContent = "";
 }
 
-function isValid(formElement, inputElement) {
+function isValid(formElement, inputElement, classes) {
   console.log(inputElement);
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
@@ -65,14 +66,14 @@ function setEventListeners(formElement, inputClass, buttonClass) {
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
-      isValid(formElement, inputElement);
-      toggleButtonState(inputList, buttonElement);
+      isValid(formElement, inputElement, classes);
+      toggleButtonState(inputList, buttonElement, classes);
     });
   });
 }
 
-function enableValidation(formClass) {
-  const formList = Array.from(document.querySelectorAll(formClass));
+function enableValidation(classes) {
+  const formList = Array.from(document.querySelectorAll(classes.formClass));
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", function (evt) {
       evt.preventDefault();
@@ -91,13 +92,13 @@ function hasInvalidInput(inputList) {
   });
 }
 
-function toggleButtonState(inputList, buttonElement) {
+function toggleButtonState(inputList, buttonElement, classes) {
   if (hasInvalidInput(inputList)) {
     buttonElement.disabled = true;
-    buttonElement.classList.add("popup__button_inactive");
+    buttonElement.classList.add(classes.inactiveButtonClass);
   } else {
     buttonElement.disabled = false;
-    buttonElement.classList.remove("popup__button_inactive");
+    buttonElement.classList.remove(classes.inactiveButtonClass);
   }
 }
 
