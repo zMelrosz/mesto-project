@@ -35,7 +35,6 @@ function hideInputError(
 }
 
 function isValid(formElement, inputElement, classes) {
-  console.log(inputElement);
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {

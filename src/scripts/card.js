@@ -87,15 +87,26 @@ function putCardToContainer(evt) {
   closePopup(nearestPopup);
   popupAddNameInput.value = "";
   popupAddUrlInput.value = "";
-  nearestPopup.querySelector(".popup__button").disabled = true; //ищется кнопка конкретного попапа, я не представляю, как это можно реализовать по-другому
+  nearestPopup.querySelector(".popup__button").disabled = true;
   evt.submitter.classList.add("popup__button_inactive");
 }
 
-function putInitialCards() {
-  initialCards.forEach(function (card) {
+function putInitialCards(){
+  fetch("https://nomoreparties.co/v1/plus-cohort-15/cards", 
+{
+  headers: {
+    authorization: "ff705783-056a-4764-ac32-7205ca669857"
+  }
+})
+.then((res) => {
+  return res.json();
+})
+.then((cards) => {
+  cards.forEach(function(card){
     const initialCard = createCard(card.name, card.link);
     cardsContainer.prepend(initialCard);
   });
+});
 }
 
-export { putCardToContainer, putInitialCards, addCardButton };
+export { putCardToContainer, putInitialCards, addCardButton};
