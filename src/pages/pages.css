@@ -41,3 +41,5 @@
 @import url(../blocks/popup/__input/_type/popup__input_type_error.css);
 @import url(../blocks/popup/__input-error/popup__input-error.css);
 @import url(../blocks/popup/__input-error/_active/popup__input-error_active.css);
+@import url(../blocks/card/__like-sch/card__like-sch.css);
+@import url(../blocks/card/__like-container/card__like-container.css);

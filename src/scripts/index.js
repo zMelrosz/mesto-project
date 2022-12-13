@@ -53,5 +53,4 @@ allClosers.forEach(function(closer)
   });
 });
 
-
 export {popupEditForm, explorerTitle, explorerSubtitle};
