@@ -50,39 +50,33 @@ function createCard(cardName, imageSrc) {
   return cardClone;
 }
 
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
+function sendCard(cardName, url){
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards', {
+    method: 'POST',
+    headers: {
+      authorization: 'ff705783-056a-4764-ac32-7205ca669857',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: cardName,
+      link: url
+    })
+  })
+  .then(res => res.json())
+  .then((responceCard) => {
+    const newCard = createCard(responceCard.name, responceCard.link);
+    cardsContainer.prepend(newCard);
+  })
+}
 
 function putCardToContainer(evt) {
   evt.preventDefault();
   const cardNameInputValue = popupAddNameInput.value;
   const cardUrlInputValue = popupAddUrlInput.value;
-  const newCard = createCard(cardNameInputValue, cardUrlInputValue);
+  sendCard(cardNameInputValue, cardUrlInputValue);
+  /* const newCard = createCard(cardNameInputValue, cardUrlInputValue);
   cardsContainer.prepend(newCard);
+  */
   const nearestPopup = evt.target.closest(".popup");
   closePopup(nearestPopup);
   popupAddNameInput.value = "";

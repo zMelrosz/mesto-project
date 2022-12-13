@@ -22,22 +22,37 @@ function updateUserInfo() {
     });
 }
 
+function changeUserInfo(userName, userAbout){
+  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', 
+  {
+    method: 'PATCH', 
+    headers: {
+      authorization: 'ff705783-056a-4764-ac32-7205ca669857',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      name: userName,
+      about: userAbout
+    })
+  });
+}
 
 function changeExplorerInfo(evt) {
   evt.preventDefault();
-
+  
   const titleInputValue = titleInput.value;
   const subtitleInputValue = subtitleInput.value;
-
   const newTitleInputValue = titleInputValue;
   const newSubtitleInputValue = subtitleInputValue;
-
-  titleInput.textContent = newTitleInputValue;
-  subtitleInput.textContent = newSubtitleInputValue;
   explorerTitle.textContent = newTitleInputValue;
   explorerSubtitle.textContent = newSubtitleInputValue;
-  const nearestPopup = evt.target.closest(".popup");
+
+  changeUserInfo(newTitleInputValue, newSubtitleInputValue)
+  const nearestPopup = evt.target.closest(".popup"); 
+
   closePopup(nearestPopup);
 }
+
+
 
 export { changeExplorerInfo, updateUserInfo};
