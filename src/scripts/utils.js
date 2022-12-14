@@ -18,7 +18,7 @@ function updateUserInfo() {
     .then((userInfo) => {
       userName.textContent = userInfo.name;
       userSubname.textContent = userInfo.about;
-      userAvatar.style.backgroundImage = `url(${userInfo.avatar})`
+      userAvatar.style.backgroundImage = `url(${userInfo.avatar})`;
     });
 }
 

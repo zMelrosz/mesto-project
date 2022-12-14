@@ -16,7 +16,7 @@ const titleInput = popupEditForm.querySelector('.popup__input_edit_title');
 const subtitleInput = popupEditForm.querySelector('.popup__input_edit_subtitle');
 
 //updateUserInfo
-updateUserInfo();
+updateUserInfo(); //update info
 
 //enable validation
 enableValidation(classes);

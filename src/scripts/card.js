@@ -28,14 +28,29 @@ function createCard(cardObj) {
   const cardClone = cardTemp.querySelector(".card").cloneNode(true);
   const cloneImage = cardClone.querySelector(".card__image");
   const cloneLikes = cardClone.querySelector('.card__like-sch');
+  const cloneDeleteIcon = cardClone.querySelector('.card__delete');
   cardClone.dataset.cardId = cardObj._id; //set card ID
-  cardClone.dataset.ownerId = cardObj.owner._id
+  
+  // hide icons :D don't know how to resolve it by other way
+  fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me",{
+    headers: {
+      authorization: "ff705783-056a-4764-ac32-7205ca669857",
+    }
+  })
+  .then((res) => res.json())
+  .then((userInfo) => {
+    if (userInfo._id !== cardObj.owner._id){
+      cloneDeleteIcon.style = "display: none;"
+    }
+  });
 
   //card settings
   cardClone.querySelector(".card__name").textContent = cardObj.name;
   cloneImage.src = cardObj.link;
   cloneImage.alt = "Пейзаж";
   cloneLikes.textContent = cardObj.likes.length;
+
+
 
   cloneImage.addEventListener("click", listenChosenImage); // set image bigger listener
 
