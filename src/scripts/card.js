@@ -23,14 +23,19 @@ function listenChosenImage(evt) {
   chosenImageCaption.textContent = imageCaption;
 }
 
-function createCard(cardName, imageSrc) {
+function createCard(cardObj) {
   const cardTemp = document.querySelector("#card-temp").content;
   const cardClone = cardTemp.querySelector(".card").cloneNode(true);
   const cloneImage = cardClone.querySelector(".card__image");
+  const cloneLikes = cardClone.querySelector('.card__like-sch');
+  cardClone.dataset.cardId = cardObj._id; //set card ID
+  cardClone.dataset.ownerId = cardObj.owner._id
 
-  cardClone.querySelector(".card__name").textContent = cardName;
-  cloneImage.src = imageSrc;
+  //card settings
+  cardClone.querySelector(".card__name").textContent = cardObj.name;
+  cloneImage.src = cardObj.link;
   cloneImage.alt = "Пейзаж";
+  cloneLikes.textContent = cardObj.likes.length;
 
   cloneImage.addEventListener("click", listenChosenImage); // set image bigger listener
 
@@ -41,9 +46,11 @@ function createCard(cardName, imageSrc) {
     chooseLike.classList.toggle("card_liked");
   });
 
+   // delete card
   const cardDelete = cardClone.querySelector(".card__delete");
   cardDelete.addEventListener("click", function (evt) {
     const chosenDelete = evt.target;
+    console.log(evt.target.closest('.card'));
     chosenDelete.closest(".card").remove();
   });
 
@@ -64,7 +71,7 @@ function sendCard(cardName, url){
   })
   .then(res => res.json())
   .then((responceCard) => {
-    const newCard = createCard(responceCard.name, responceCard.link);
+    const newCard = createCard(responceCard);
     cardsContainer.prepend(newCard);
   })
 }
@@ -74,9 +81,7 @@ function putCardToContainer(evt) {
   const cardNameInputValue = popupAddNameInput.value;
   const cardUrlInputValue = popupAddUrlInput.value;
   sendCard(cardNameInputValue, cardUrlInputValue);
-  /* const newCard = createCard(cardNameInputValue, cardUrlInputValue);
-  cardsContainer.prepend(newCard);
-  */
+
   const nearestPopup = evt.target.closest(".popup");
   closePopup(nearestPopup);
   popupAddNameInput.value = "";
@@ -97,7 +102,7 @@ function putInitialCards(){
 })
 .then((cards) => {
   cards.forEach(function(card){
-    const initialCard = createCard(card.name, card.link);
+    const initialCard = createCard(card);
     cardsContainer.prepend(initialCard);
   });
 });
