@@ -10,4 +10,3 @@
 - Grid
 - БЭМ
 
-Ссылка: https://zmelrosz.github.io/mesto-project/index.html
