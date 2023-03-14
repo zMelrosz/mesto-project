@@ -30,19 +30,25 @@ function createCard(cardObj) {
   const cloneImage = cardClone.querySelector(".card__image");
   const cloneLikes = cardClone.querySelector(".card__like-sch");
   const cloneDeleteIcon = cardClone.querySelector(".card__delete");
-  cardClone.dataset.cardId = cardObj._id; //set card ID
-  cardClone.dataset.ownerId = cardObj.owner._id; //set owner ID
+  cardClone.dataset.card_id = cardObj._id; //set card ID
+  cardClone.dataset.owner_id = cardObj.owner._id; //set owner ID
   
-  if (cardClone.dataset.ownerId === userId) {  // add delete icons
+  if (cardClone.dataset.owner_id === userId) {  // add delete icons
     cloneDeleteIcon.style = "display: block;";
   }
 
   // delete card listener
   const cardDelete = cardClone.querySelector(".card__delete");
   cardDelete.addEventListener("click", function (evt) {
-    const chosenDelete = evt.target;
-    console.log(chosenDelete.closest(""));
-    chosenDelete.closest(".card").remove();
+    const cardToDelete = evt.target.closest('.card');
+    console.log(cardToDelete.dataset.card_id);
+    fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/${cardToDelete.dataset.card_id}`, {
+    method : 'delete',
+    headers : {
+      authorization : 'ff705783-056a-4764-ac32-7205ca669857',
+      'Content-Type' : 'application/json'
+    } 
+  }).then(cardToDelete.remove())
   });
 
   //card settings
@@ -111,15 +117,6 @@ function putInitialCards() {
         cardsContainer.prepend(initialCard);
       });
     });
-}
-
-function deleteCard(cardId) {
-  fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/${cardId}`, {
-    method: "delete",
-    headers: {
-      authorization: "ff705783-056a-4764-ac32-7205ca669857",
-    },
-  });
 }
 
 export { putCardToContainer, putInitialCards, addCardButton };
