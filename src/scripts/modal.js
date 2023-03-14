@@ -29,16 +29,6 @@ function openPopup(popup) {
   document.addEventListener("keydown", closePopupEsc);
 }
 
-export {
-  popupAddForm,
-  popupEditForm,
-  openPopup,
-  popupImage,
-  popupAdd,
-  closePopup,
-  popupEdit,
-};
-
 function closePopup(popup) {
   popup.classList.remove("popup_opened");
   document.removeEventListener("keydown", closePopupEsc);
@@ -50,3 +40,13 @@ function closePopupEsc(evt) {
     closePopup(openedPopup);
   }
 }
+
+export {
+  popupAddForm,
+  popupEditForm,
+  openPopup,
+  popupImage,
+  popupAdd,
+  closePopup,
+  popupEdit,
+};

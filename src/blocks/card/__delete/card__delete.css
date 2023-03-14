@@ -1,5 +1,6 @@
 .card__delete
 {
+  display: none;
   background-image: url(../../../images/deleteCard.svg);
   margin: 0;
   position: absolute;

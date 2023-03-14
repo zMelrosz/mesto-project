@@ -4,10 +4,13 @@ import { closePopup } from "./modal.js";
 const userName = document.querySelector(".explorer__title");
 const userSubname = document.querySelector(".explorer__subtitle");
 const userAvatar = document.querySelector(".explorer__avatar");
+const userId = document.querySelector('.explorer__person'); // dataset
+
 const titleInput = popupEditForm.querySelector(".popup__input_edit_title");
 const subtitleInput = popupEditForm.querySelector(".popup__input_edit_subtitle");
 
 function updateUserInfo() {
+
   fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me",
     {
       headers: {
@@ -19,6 +22,7 @@ function updateUserInfo() {
       userName.textContent = userInfo.name;
       userSubname.textContent = userInfo.about;
       userAvatar.style.backgroundImage = `url(${userInfo.avatar})`;
+      userId.dataset.user_id = userInfo._id;
     });
 }
 
@@ -55,4 +59,4 @@ function changeExplorerInfo(evt) {
 
 
 
-export { changeExplorerInfo, updateUserInfo};
+export { changeExplorerInfo, updateUserInfo };

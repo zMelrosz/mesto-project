@@ -24,24 +24,25 @@ function listenChosenImage(evt) {
 }
 
 function createCard(cardObj) {
+  const userId = document.querySelector('.explorer__person').dataset.user_id;
   const cardTemp = document.querySelector("#card-temp").content;
   const cardClone = cardTemp.querySelector(".card").cloneNode(true);
   const cloneImage = cardClone.querySelector(".card__image");
-  const cloneLikes = cardClone.querySelector('.card__like-sch');
-  const cloneDeleteIcon = cardClone.querySelector('.card__delete');
+  const cloneLikes = cardClone.querySelector(".card__like-sch");
+  const cloneDeleteIcon = cardClone.querySelector(".card__delete");
   cardClone.dataset.cardId = cardObj._id; //set card ID
+  cardClone.dataset.ownerId = cardObj.owner._id; //set owner ID
   
-  // hide icons :D don't know how to resolve it by other way
-  fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me",{
-    headers: {
-      authorization: "ff705783-056a-4764-ac32-7205ca669857",
-    }
-  })
-  .then((res) => res.json())
-  .then((userInfo) => {
-    if (userInfo._id !== cardObj.owner._id){
-      cloneDeleteIcon.style = "display: none;"
-    }
+  if (cardClone.dataset.ownerId === userId) {  // add delete icons
+    cloneDeleteIcon.style = "display: block;";
+  }
+
+  // delete card listener
+  const cardDelete = cardClone.querySelector(".card__delete");
+  cardDelete.addEventListener("click", function (evt) {
+    const chosenDelete = evt.target;
+    console.log(chosenDelete.closest(""));
+    chosenDelete.closest(".card").remove();
   });
 
   //card settings
@@ -50,9 +51,7 @@ function createCard(cardObj) {
   cloneImage.alt = "Пейзаж";
   cloneLikes.textContent = cardObj.likes.length;
 
-
-
-  cloneImage.addEventListener("click", listenChosenImage); // set image bigger listener
+  cloneImage.addEventListener("click", listenChosenImage); // set "image bigger" listener
 
   //add cards like listener
   const cloneLike = cardClone.querySelector(".card__like");
@@ -61,34 +60,26 @@ function createCard(cardObj) {
     chooseLike.classList.toggle("card_liked");
   });
 
-   // delete card
-  const cardDelete = cardClone.querySelector(".card__delete");
-  cardDelete.addEventListener("click", function (evt) {
-    const chosenDelete = evt.target;
-    console.log(evt.target.closest('.card'));
-    chosenDelete.closest(".card").remove();
-  });
-
   return cardClone;
 }
 
-function sendCard(cardName, url){
-  fetch('https://nomoreparties.co/v1/plus-cohort-15/cards', {
-    method: 'POST',
+function sendCard(cardName, url) {
+  fetch("https://nomoreparties.co/v1/plus-cohort-15/cards", {
+    method: "POST",
     headers: {
-      authorization: 'ff705783-056a-4764-ac32-7205ca669857',
-      'Content-Type': 'application/json'
+      authorization: "ff705783-056a-4764-ac32-7205ca669857",
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       name: cardName,
-      link: url
-    })
+      link: url,
+    }),
   })
-  .then(res => res.json())
-  .then((responceCard) => {
-    const newCard = createCard(responceCard);
-    cardsContainer.prepend(newCard);
-  })
+    .then((res) => res.json())
+    .then((responceCard) => {
+      const newCard = createCard(responceCard);
+      cardsContainer.prepend(newCard);
+    });
 }
 
 function putCardToContainer(evt) {
@@ -105,22 +96,30 @@ function putCardToContainer(evt) {
   evt.submitter.classList.add("popup__button_inactive");
 }
 
-function putInitialCards(){
-  fetch("https://nomoreparties.co/v1/plus-cohort-15/cards", 
-{
-  headers: {
-    authorization: "ff705783-056a-4764-ac32-7205ca669857"
-  }
-})
-.then((res) => {
-  return res.json();
-})
-.then((cards) => {
-  cards.forEach(function(card){
-    const initialCard = createCard(card);
-    cardsContainer.prepend(initialCard);
-  });
-});
+function putInitialCards() {
+  fetch("https://nomoreparties.co/v1/plus-cohort-15/cards", {
+    headers: {
+      authorization: "ff705783-056a-4764-ac32-7205ca669857",
+    },
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((cards) => {
+      cards.forEach(function (card) {
+        const initialCard = createCard(card);
+        cardsContainer.prepend(initialCard);
+      });
+    });
 }
 
-export { putCardToContainer, putInitialCards, addCardButton};
+function deleteCard(cardId) {
+  fetch(`https://nomoreparties.co/v1/plus-cohort-15/cards/${cardId}`, {
+    method: "delete",
+    headers: {
+      authorization: "ff705783-056a-4764-ac32-7205ca669857",
+    },
+  });
+}
+
+export { putCardToContainer, putInitialCards, addCardButton };
