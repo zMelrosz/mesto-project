@@ -32,7 +32,7 @@ function createCard(cardObj) {
   const cardClone = cardTemp.querySelector(".card").cloneNode(true);
   const cloneImage = cardClone.querySelector(".card__image");
   const cloneLikes = cardClone.querySelector(".card__like-sch");
-  const cloneLikesIds = cardClone.querySelector('.card__like-container');
+  const cloneLikeIcon = cardClone.querySelector('.card__like');
   const cloneDeleteIcon = cardClone.querySelector(".card__delete");
   cardClone.dataset.card_id = cardObj._id; //set card ID
   cardClone.dataset.owner_id = cardObj.owner._id; //set owner ID
@@ -42,9 +42,10 @@ function createCard(cardObj) {
     cloneImage.src = cardObj.link;
     cloneImage.alt = "Картинка";
     cloneLikes.textContent = cardObj.likes.length;
-    cloneLikesIds.dataset.like_ids = cardObj.likes.map(function (like) {
-      return like._id;
-    }).join(',');
+    if (cardObj.likes.some((like) => like._id === userId)) { // user like check 
+      cloneLikeIcon.classList.add('card_liked');
+    } 
+    
   
   if (cardClone.dataset.owner_id === userId) {  // add delete icons
     cloneDeleteIcon.style = "display: block;";
@@ -65,18 +66,31 @@ function createCard(cardObj) {
 
   //add cards like listener
   const cloneLike = cardClone.querySelector(".card__like");
-  cloneLike.addEventListener("click", function (evt) {
+  const cloneLikeSch = cardClone.querySelector('.card__like-sch');
+  cloneLike.addEventListener("click", function (evt) { // toggle like
     const cardToLike = evt.target.closest('.card');
-    fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`, {
+    if (!cardToLike.querySelector('.card_liked')) {
+      fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`, {
       method : 'PUT',
         headers : {
-          authorization : "37ffcee9-990f-410f-926f-55d3b1286071",
-          //'Content-Type' : 'application/json'
+          authorization : tempAuthTn,
         }
-      }).then((res) => res.json()).then((res) => res.likes).then((likes) => console.log(likes));
-      console.log(cardToLike.querySelector('.card__like'));
-      cardToLike.querySelector('.card__like').classList.toggle("card_liked");
-  });
+      }).then((res) => res.json()).then((res) => cloneLikeSch.textContent = res.likes.length);
+      console.log(cloneLikeSch.textContent);
+      cardToLike.querySelector('.card__like').classList.add("card_liked");
+    }
+
+    else {
+      fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`, {
+        method : 'DELETE',
+        headers : {
+          authorization : tempAuthTn,
+        }
+      }).then((res) => res.json()).then((res) => cloneLikeSch.textContent = res.likes.length);
+      console.log(cloneLikeSch.textContent);
+      cardToLike.querySelector('.card__like').classList.remove('card_liked');
+    }
+  }); 
 
   cloneImage.addEventListener("click", listenChosenImage); // set "image bigger" listener
 
