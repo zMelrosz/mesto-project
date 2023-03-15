@@ -1,1 +1,4 @@
-delete card check
+add ids to html +
+check if liked 
+set put like 
+set delete like

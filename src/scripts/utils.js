@@ -1,6 +1,9 @@
 import { popupEditForm, explorerTitle, explorerSubtitle } from "./index.js";
 import { closePopup } from "./modal.js";
 
+const tempCohortId = 'plus-cohort-22';
+const tempAuthTn = '37ffcee9-990f-410f-926f-55d3b1286071';
+
 const userName = document.querySelector(".explorer__title");
 const userSubname = document.querySelector(".explorer__subtitle");
 const userAvatar = document.querySelector(".explorer__avatar");
@@ -11,10 +14,10 @@ const subtitleInput = popupEditForm.querySelector(".popup__input_edit_subtitle")
 
 function updateUserInfo() {
 
-  fetch("https://nomoreparties.co/v1/plus-cohort-15/users/me",
+  fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`,
     {
       headers: {
-        authorization: "ff705783-056a-4764-ac32-7205ca669857",
+        authorization: `${tempAuthTn}`,
       }
     })
     .then((res) => res.json())
@@ -27,11 +30,11 @@ function updateUserInfo() {
 }
 
 function changeUserInfo(userName, userAbout){
-  fetch('https://nomoreparties.co/v1/plus-cohort-15/users/me', 
+  fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, 
   {
     method: 'PATCH', 
     headers: {
-      authorization: 'ff705783-056a-4764-ac32-7205ca669857',
+      authorization: `${tempAuthTn}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
