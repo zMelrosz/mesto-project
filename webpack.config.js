@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const path = require('path'); // path - превращает относительный путь в абсолютный
 const   HtmlWebpackPlugin = require('html-webpack-plugin'); // подключаем плагин обработки html
 const { CleanWebpackPlugin } = require('clean-webpack-plugin'); // подключаем плагин, удаляющий содержимое папки dist

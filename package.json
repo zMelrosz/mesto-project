@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack serve"
+    "dev": "webpack serve",
+    "format" : "npx prettier --write \"src/blocks/**/*\" \"src/pages/**/*\" \"src/scripts/**/*\" \"src/vendor/**/*\"",
+    "format-check" : "npx prettier --check \"src/blocks/**/*\" \"src/pages/**/*\" \"src/scripts/**/*\" \"src/vendor/**/*\""
   },
   "repository": {
     "type": "git",
@@ -25,8 +27,10 @@
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.2",
     "cssnano": "^5.1.14",
+    "eslint": "^8.36.0",
     "mini-css-extract-plugin": "^2.7.2",
     "postcss-loader": "^7.0.2",
+    "prettier": "2.8.4",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.11.1"

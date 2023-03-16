@@ -5,11 +5,6 @@ const page = document.querySelector(".page"); //pageObj
 const popupEdit = page.querySelector(".popup_type_edit");
 const popupAdd = page.querySelector(".popup_type_add");
 const popupImage = page.querySelector(".popup_type_image");
-const popupForms = page.querySelectorAll(".popup__form");
-
-//popupClosers
-const popupImageCloser = popupImage.querySelector(".popup__close");
-const popupClosers = page.querySelectorAll(".popup__close");
 
 const popupEditForm = popupEdit.querySelector(".popup__container");
 const popupAddForm = page.querySelector(".popup_type_add");

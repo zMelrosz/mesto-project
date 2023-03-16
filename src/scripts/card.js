@@ -1,7 +1,7 @@
 import { openPopup, popupImage, popupAddForm, closePopup } from "./modal.js";
 
-const tempCohortId = 'plus-cohort-22';
-const tempAuthTn = '37ffcee9-990f-410f-926f-55d3b1286071';
+const tempCohortId = "plus-cohort-22";
+const tempAuthTn = "37ffcee9-990f-410f-926f-55d3b1286071";
 
 //----------cards----------
 const page = document.querySelector(".page"); //pageObj
@@ -27,70 +27,83 @@ function listenChosenImage(evt) {
 }
 
 function createCard(cardObj) {
-  const userId = document.querySelector('.explorer__person').dataset.user_id;
+  const userId = document.querySelector(".explorer__person").dataset.user_id;
   const cardTemp = document.querySelector("#card-temp").content;
   const cardClone = cardTemp.querySelector(".card").cloneNode(true);
   const cloneImage = cardClone.querySelector(".card__image");
   const cloneLikes = cardClone.querySelector(".card__like-sch");
-  const cloneLikeIcon = cardClone.querySelector('.card__like');
+  const cloneLikeIcon = cardClone.querySelector(".card__like");
   const cloneDeleteIcon = cardClone.querySelector(".card__delete");
   cardClone.dataset.card_id = cardObj._id; //set card ID
   cardClone.dataset.owner_id = cardObj.owner._id; //set owner ID
 
-    //card settings
-    cardClone.querySelector(".card__name").textContent = cardObj.name;
-    cloneImage.src = cardObj.link;
-    cloneImage.alt = "Картинка";
-    cloneLikes.textContent = cardObj.likes.length;
-    if (cardObj.likes.some((like) => like._id === userId)) { // user like check 
-      cloneLikeIcon.classList.add('card_liked');
-    } 
-    
-  
-  if (cardClone.dataset.owner_id === userId) {  // add delete icons
+  //card settings
+  cardClone.querySelector(".card__name").textContent = cardObj.name;
+  cloneImage.src = cardObj.link;
+  cloneImage.alt = "Картинка";
+  cloneLikes.textContent = cardObj.likes.length;
+  if (cardObj.likes.some((like) => like._id === userId)) {
+    // user like check
+    cloneLikeIcon.classList.add("card_liked");
+  }
+
+  if (cardClone.dataset.owner_id === userId) {
+    // add delete icons
     cloneDeleteIcon.style = "display: block;";
   }
 
   // delete card listener
   const cardDelete = cardClone.querySelector(".card__delete");
   cardDelete.addEventListener("click", function (evt) {
-    const cardToDelete = evt.target.closest('.card');
-    fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards/${cardToDelete.dataset.card_id}`, {
-    method : 'delete',
-    headers : {
-      authorization : `${tempAuthTn}`,
-      'Content-Type' : 'application/json'
-    }
-  }).then(cardToDelete.remove())
+    const cardToDelete = evt.target.closest(".card");
+    fetch(
+      `https://nomoreparties.co/v1/${tempCohortId}/cards/${cardToDelete.dataset.card_id}`,
+      {
+        method: "delete",
+        headers: {
+          authorization: `${tempAuthTn}`,
+          "Content-Type": "application/json",
+        },
+      }
+    ).then(cardToDelete.remove());
   });
 
   //add cards like listener
   const cloneLike = cardClone.querySelector(".card__like");
-  const cloneLikeSch = cardClone.querySelector('.card__like-sch');
-  cloneLike.addEventListener("click", function (evt) { // toggle like
-    const cardToLike = evt.target.closest('.card');
-    if (!cardToLike.querySelector('.card_liked')) {
-      fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`, {
-      method : 'PUT',
-        headers : {
-          authorization : tempAuthTn,
+  const cloneLikeSch = cardClone.querySelector(".card__like-sch");
+  cloneLike.addEventListener("click", function (evt) {
+    // toggle like
+    const cardToLike = evt.target.closest(".card");
+    if (!cardToLike.querySelector(".card_liked")) {
+      fetch(
+        `https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`,
+        {
+          method: "PUT",
+          headers: {
+            authorization: tempAuthTn,
+          },
         }
-      }).then((res) => res.json()).then((res) => cloneLikeSch.textContent = res.likes.length);
+      )
+        .then((res) => res.json())
+        .then((res) => (cloneLikeSch.textContent = res.likes.length));
       console.log(cloneLikeSch.textContent);
-      cardToLike.querySelector('.card__like').classList.add("card_liked");
-    }
-
-    else {
-      fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`, {
-        method : 'DELETE',
-        headers : {
-          authorization : tempAuthTn,
+      cardToLike.querySelector(".card__like").classList.add("card_liked");
+    } else {
+      fetch(
+        `https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`,
+        {
+          method: "DELETE",
+          headers: {
+            authorization: tempAuthTn,
+          },
         }
-      }).then((res) => res.json()).then((res) => cloneLikeSch.textContent = res.likes.length);
+      )
+        .then((res) => res.json())
+        .then((res) => (cloneLikeSch.textContent = res.likes.length));
       console.log(cloneLikeSch.textContent);
-      cardToLike.querySelector('.card__like').classList.remove('card_liked');
+      cardToLike.querySelector(".card__like").classList.remove("card_liked");
     }
-  }); 
+  });
 
   cloneImage.addEventListener("click", listenChosenImage); // set "image bigger" listener
 
@@ -140,7 +153,6 @@ function putInitialCards() {
       return res.json();
     })
     .then((cards) => {
-      const userId = document.querySelector('.explorer__person').dataset.user_id;
       cards.forEach(function (card) {
         const initialCard = createCard(card);
         cardsContainer.prepend(initialCard);

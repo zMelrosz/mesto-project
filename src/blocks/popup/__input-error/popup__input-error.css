@@ -1,14 +1,11 @@
-.popup__input-error
-{
+.popup__input-error {
   display: none;
   color: red;
   margin-left: 7.906976744186047%;
 }
 
-@media screen and (max-width: 879px) 
-{
-  .popup__input-error
-  {
+@media screen and (max-width: 879px) {
+  .popup__input-error {
     margin-left: 6.701687211845352%;
   }
 }

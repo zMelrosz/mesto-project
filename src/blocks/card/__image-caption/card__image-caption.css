@@ -1,5 +1,4 @@
-.card__image-caption
-{
+.card__image-caption {
   margin: 0;
   margin-top: 10px;
   font-family: Inter;
@@ -8,5 +7,5 @@
   line-height: 15px;
   letter-spacing: 0em;
   text-align: left;
-  color: #FFFFFF;
+  color: #ffffff;
 }
