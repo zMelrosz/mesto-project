@@ -1,4 +1,4 @@
-import { popupEditForm, explorerTitle, explorerSubtitle } from "./index.js";
+import { popupEditForm, explorerTitle, explorerSubtitle, } from "./index.js";
 import { closePopup } from "./modal.js";
 
 const tempCohortId = "plus-cohort-22";
@@ -14,7 +14,7 @@ const subtitleInput = popupEditForm.querySelector(
   ".popup__input_edit_subtitle"
 );
 
-function updateUserInfo() {
+function getUserInfo() {
   fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, {
     headers: {
       authorization: `${tempAuthTn}`,
@@ -29,20 +29,6 @@ function updateUserInfo() {
     });
 }
 
-function changeUserInfo(userName, userAbout) {
-  fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, {
-    method: "PATCH",
-    headers: {
-      authorization: `${tempAuthTn}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: userName,
-      about: userAbout,
-    }),
-  });
-}
-
 function changeExplorerInfo(evt) {
   evt.preventDefault();
 
@@ -53,10 +39,45 @@ function changeExplorerInfo(evt) {
   explorerTitle.textContent = newTitleInputValue;
   explorerSubtitle.textContent = newSubtitleInputValue;
 
-  changeUserInfo(newTitleInputValue, newSubtitleInputValue);
+  function putUserInfo(userName, userAbout) {
+    fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, {
+      method: "PATCH",
+      headers: {
+        authorization: `${tempAuthTn}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: userName,
+        about: userAbout,
+      }),
+    });
+  }
+
+  putUserInfo(newTitleInputValue, newSubtitleInputValue);
   const nearestPopup = evt.target.closest(".popup");
 
   closePopup(nearestPopup);
 }
 
-export { changeExplorerInfo, updateUserInfo };
+function changeUserAvatar (evt) {
+  evt.preventDefault();
+
+  const avatarUrl = evt.target.closest(".popup__form").querySelector(".popup__input_edit_avatar").value;
+
+  fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me/avatar`, {
+    method: "PATCH",
+      headers: {
+        authorization: `${tempAuthTn}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        avatar : avatarUrl,
+      }),
+  }).then((res) => res.json()).then((res => console.log(res)))
+
+  userAvatar.style.backgroundImage = `url(${avatarUrl})`;
+  console.log(evt.target.closest('.popup'));
+  closePopup(evt.target.closest('.popup'));
+}
+
+export { changeExplorerInfo, getUserInfo, changeUserAvatar };

@@ -6,25 +6,30 @@ import {
   popupAdd,
   popupEdit,
   closePopup,
+  popupAvatar,
 } from "./modal.js";
 import { enableValidation, classes } from "./validate.js";
-import { changeExplorerInfo, updateUserInfo } from "./utils.js";
+import { changeExplorerInfo, getUserInfo, changeUserAvatar } from "./utils.js";
 import "../pages/pages.css"; // импортировали главный файл стилей
+
+
 
 const page = document.querySelector(".page"); //pageObj
 const main = page.querySelector("main"); //mainOb
+
 
 //explorer
 const explorerEditButton = main.querySelector(".explorer__edit");
 const explorerTitle = main.querySelector(".explorer__title");
 const explorerSubtitle = main.querySelector(".explorer__subtitle");
+const explorerAvatar = document.querySelector('.explorer__avatar');
 const titleInput = popupEditForm.querySelector(".popup__input_edit_title");
 const subtitleInput = popupEditForm.querySelector(
   ".popup__input_edit_subtitle"
 );
 
-//updateUserInfo
-updateUserInfo(); //update info
+// getUserInfo
+getUserInfo(); //update info
 
 //enable validation
 enableValidation(classes);
@@ -45,7 +50,14 @@ addCardButton.addEventListener("click", function () {
   openPopup(popupAdd);
 });
 
+// explorer listeners
 popupEditForm.addEventListener("submit", changeExplorerInfo);
+explorerAvatar.addEventListener('click', function () {
+  openPopup(popupAvatar);
+});
+popupAvatar.addEventListener('submit',changeUserAvatar)
+
+
 
 //popup closers listeners
 const allClosers = document.querySelectorAll(".popup__close");

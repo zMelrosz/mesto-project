@@ -1,3 +1,6 @@
+// eslint-disable-next-line no-unused-vars
+import { doc } from "prettier";
+
 //popupAdd
 const page = document.querySelector(".page"); //pageObj
 
@@ -8,6 +11,7 @@ const popupImage = page.querySelector(".popup_type_image");
 
 const popupEditForm = popupEdit.querySelector(".popup__container");
 const popupAddForm = page.querySelector(".popup_type_add");
+const popupAvatar = document.querySelector('.popup_type_avatar');
 
 const popups = document.querySelectorAll(".popup");
 
@@ -44,4 +48,5 @@ export {
   popupAdd,
   closePopup,
   popupEdit,
+  popupAvatar,
 };
