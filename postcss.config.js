@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const autoprefixer = require('autoprefixer'); // подключаем плагин autoprefixer в файл
 const cssnano = require('cssnano'); // подключаем плагин cssnano в файл
 

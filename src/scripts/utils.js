@@ -31,6 +31,7 @@ function getUserInfo() {
 
 function changeExplorerInfo(evt) {
   evt.preventDefault();
+  const submitButton = evt.target.querySelector('.popup__button');
 
   const titleInputValue = titleInput.value;
   const subtitleInputValue = subtitleInput.value;
@@ -39,7 +40,11 @@ function changeExplorerInfo(evt) {
   explorerTitle.textContent = newTitleInputValue;
   explorerSubtitle.textContent = newSubtitleInputValue;
 
-  function putUserInfo(userName, userAbout) {
+  function putUserInfo(userName, userAbout, submitButton, loadingText) {
+
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = loadingText;
+
     fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, {
       method: "PATCH",
       headers: {
@@ -50,10 +55,12 @@ function changeExplorerInfo(evt) {
         name: userName,
         about: userAbout,
       }),
+    }).finally(() => {
+      submitButton.textContent = originalButtonText;
     });
   }
 
-  putUserInfo(newTitleInputValue, newSubtitleInputValue);
+  putUserInfo(newTitleInputValue, newSubtitleInputValue, submitButton, 'Сохранение...');
   const nearestPopup = evt.target.closest(".popup");
 
   closePopup(nearestPopup);
@@ -63,7 +70,10 @@ function changeUserAvatar (evt) {
   evt.preventDefault();
 
   const avatarUrl = evt.target.closest(".popup__form").querySelector(".popup__input_edit_avatar").value;
+  const avatarSubmit = evt.target.querySelector('.popup__button');
 
+  const originalButtonText = avatarSubmit.textContent;
+  avatarSubmit.textContent = 'Сохранение...';
   fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me/avatar`, {
     method: "PATCH",
       headers: {
@@ -73,7 +83,9 @@ function changeUserAvatar (evt) {
       body: JSON.stringify({
         avatar : avatarUrl,
       }),
-  }).then((res) => res.json()).then((res => console.log(res)))
+  }).then((res) => res.json()).then((res => console.log(res))).finally(() => {
+    avatarSubmit.textContent = originalButtonText;
+  })
 
   userAvatar.style.backgroundImage = `url(${avatarUrl})`;
   console.log(evt.target.closest('.popup'));

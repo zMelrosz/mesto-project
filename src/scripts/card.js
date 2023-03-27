@@ -34,15 +34,20 @@ function createCard(cardObj) {
   const cloneLikes = cardClone.querySelector(".card__like-sch");
   const cloneLikeIcon = cardClone.querySelector(".card__like");
   const cloneDeleteIcon = cardClone.querySelector(".card__delete");
-  cardClone.dataset.card_id = cardObj._id; //set card ID
-  cardClone.dataset.owner_id = cardObj.owner._id; //set owner ID
+
+  if (cardObj._id) {
+    cardClone.dataset.card_id = cardObj._id; // set card ID
+  }
+  if (cardObj.owner && cardObj.owner._id) {
+    cardClone.dataset.owner_id = cardObj.owner._id; // set owner ID
+  }
 
   //card settings
   cardClone.querySelector(".card__name").textContent = cardObj.name;
   cloneImage.src = cardObj.link;
   cloneImage.alt = "Картинка";
-  cloneLikes.textContent = cardObj.likes.length;
-  if (cardObj.likes.some((like) => like._id === userId)) {
+  cloneLikes.textContent = cardObj.likes ? cardObj.likes.length : 0;
+  if (cardObj.likes && cardObj.likes.some((like) => like._id === userId)) {
     // user like check
     cloneLikeIcon.classList.add("card_liked");
   }
@@ -110,32 +115,44 @@ function createCard(cardObj) {
   return cardClone;
 }
 
-function sendCard(cardName, url) {
-  fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards`, {
-    method: "POST",
-    headers: {
-      authorization: `${tempAuthTn}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      name: cardName,
-      link: url,
-    }),
-  })
-    .then((res) => res.json())
-    .then((responceCard) => {
-      const newCard = createCard(responceCard);
-      cardsContainer.prepend(newCard);
-    });
-}
+
 
 function putCardToContainer(evt) {
   evt.preventDefault();
   const cardNameInputValue = popupAddNameInput.value;
   const cardUrlInputValue = popupAddUrlInput.value;
-  sendCard(cardNameInputValue, cardUrlInputValue);
-
   const nearestPopup = evt.target.closest(".popup");
+  const submitButton = nearestPopup.querySelector('.popup__button');
+
+  function sendCard(cardName, url, submitButton, loadingText) {
+
+    const originalButtonText = submitButton.textContent;
+    submitButton.textContent = loadingText;
+  
+    fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards`, {
+      method: "POST",
+      headers: {
+        authorization: `${tempAuthTn}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name: cardName,
+        link: url,
+      }),
+    })
+      .then((res) => res.json())
+      .then((responceCard) => {
+        const newCard = createCard(responceCard);
+        cardsContainer.prepend(newCard);
+      })
+      .finally(() => {
+        submitButton.textContent = originalButtonText;
+      })
+  }
+
+  sendCard(cardNameInputValue, cardUrlInputValue, submitButton, 'Создание...');
+
+  
   closePopup(nearestPopup);
   popupAddNameInput.value = "";
   popupAddUrlInput.value = "";
