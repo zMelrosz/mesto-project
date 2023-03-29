@@ -1,8 +1,6 @@
-import { popupEditForm, explorerTitle, explorerSubtitle, } from "./index.js";
+import { popupEditForm, explorerTitle, explorerSubtitle } from "./index.js";
 import { closePopup } from "./modal.js";
-
-const tempCohortId = "plus-cohort-22";
-const tempAuthTn = "37ffcee9-990f-410f-926f-55d3b1286071";
+import { getUserInfo, patchUserAvatar, updateUserInfo } from "./api.js";
 
 const userName = document.querySelector(".explorer__title");
 const userSubname = document.querySelector(".explorer__subtitle");
@@ -14,82 +12,71 @@ const subtitleInput = popupEditForm.querySelector(
   ".popup__input_edit_subtitle"
 );
 
-function getUserInfo() {
-  fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, {
-    headers: {
-      authorization: `${tempAuthTn}`,
-    },
-  })
-    .then((res) => res.json())
+function loadUserInfo() {
+  getUserInfo()
     .then((userInfo) => {
       userName.textContent = userInfo.name;
       userSubname.textContent = userInfo.about;
       userAvatar.style.backgroundImage = `url(${userInfo.avatar})`;
       userId.dataset.user_id = userInfo._id;
+    })
+    .catch((err) =>
+      console.log(`Ошибка при загрузке пользовательских данных ${err}`)
+    );
+}
+
+function patchUserInfo(userName, userAbout, submitButton, loadingText) {
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = loadingText;
+
+  updateUserInfo(userName, userAbout)
+    .catch((err) =>
+      console.log(`Ошибка при обновлении пользовательских данных ${err}`)
+    )
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
     });
 }
 
 function changeExplorerInfo(evt) {
   evt.preventDefault();
-  const submitButton = evt.target.querySelector('.popup__button');
+  const submitButton = evt.target.querySelector(".popup__button");
 
   const titleInputValue = titleInput.value;
   const subtitleInputValue = subtitleInput.value;
-  const newTitleInputValue = titleInputValue;
-  const newSubtitleInputValue = subtitleInputValue;
-  explorerTitle.textContent = newTitleInputValue;
-  explorerSubtitle.textContent = newSubtitleInputValue;
+  explorerTitle.textContent = titleInputValue;
+  explorerSubtitle.textContent = subtitleInputValue;
 
-  function putUserInfo(userName, userAbout, submitButton, loadingText) {
-
-    const originalButtonText = submitButton.textContent;
-    submitButton.textContent = loadingText;
-
-    fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me`, {
-      method: "PATCH",
-      headers: {
-        authorization: `${tempAuthTn}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: userName,
-        about: userAbout,
-      }),
-    }).finally(() => {
-      submitButton.textContent = originalButtonText;
-    });
-  }
-
-  putUserInfo(newTitleInputValue, newSubtitleInputValue, submitButton, 'Сохранение...');
+  patchUserInfo(
+    titleInputValue,
+    subtitleInputValue,
+    submitButton,
+    "Сохранение..."
+  );
   const nearestPopup = evt.target.closest(".popup");
 
   closePopup(nearestPopup);
 }
 
-function changeUserAvatar (evt) {
+function changeUserAvatar(evt) {
   evt.preventDefault();
 
-  const avatarUrl = evt.target.closest(".popup__form").querySelector(".popup__input_edit_avatar").value;
-  const avatarSubmit = evt.target.querySelector('.popup__button');
+  const avatarUrl = evt.target
+    .closest(".popup__form")
+    .querySelector(".popup__input_edit_avatar").value;
+  const avatarSubmit = evt.target.querySelector(".popup__button");
 
   const originalButtonText = avatarSubmit.textContent;
-  avatarSubmit.textContent = 'Сохранение...';
-  fetch(`https://nomoreparties.co/v1/${tempCohortId}/users/me/avatar`, {
-    method: "PATCH",
-      headers: {
-        authorization: `${tempAuthTn}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        avatar : avatarUrl,
-      }),
-  }).then((res) => res.json()).then((res => console.log(res))).finally(() => {
-    avatarSubmit.textContent = originalButtonText;
-  })
+  avatarSubmit.textContent = "Сохранение...";
 
-  userAvatar.style.backgroundImage = `url(${avatarUrl})`;
-  console.log(evt.target.closest('.popup'));
-  closePopup(evt.target.closest('.popup'));
+  patchUserAvatar(avatarUrl)
+    .then(() => {
+      userAvatar.style.backgroundImage = `url(${avatarUrl})`;
+      closePopup(evt.target.closest(".popup"));
+    })
+    .finally(() => {
+      avatarSubmit.textContent = originalButtonText;
+    });
 }
 
-export { changeExplorerInfo, getUserInfo, changeUserAvatar };
+export { changeExplorerInfo, loadUserInfo, changeUserAvatar };

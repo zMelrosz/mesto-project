@@ -1,7 +1,11 @@
 import { openPopup, popupImage, popupAddForm, closePopup } from "./modal.js";
-
-const tempCohortId = "plus-cohort-22";
-const tempAuthTn = "37ffcee9-990f-410f-926f-55d3b1286071";
+import {
+  getInitialCards,
+  postCard,
+  deleteCard,
+  putLike,
+  deleteLike,
+} from "./api.js";
 
 //----------cards----------
 const page = document.querySelector(".page"); //pageObj
@@ -61,16 +65,11 @@ function createCard(cardObj) {
   const cardDelete = cardClone.querySelector(".card__delete");
   cardDelete.addEventListener("click", function (evt) {
     const cardToDelete = evt.target.closest(".card");
-    fetch(
-      `https://nomoreparties.co/v1/${tempCohortId}/cards/${cardToDelete.dataset.card_id}`,
-      {
-        method: "delete",
-        headers: {
-          authorization: `${tempAuthTn}`,
-          "Content-Type": "application/json",
-        },
-      }
-    ).then(cardToDelete.remove());
+    deleteCard(cardToDelete.dataset.card_id)
+      .then(() => {
+        cardToDelete.remove();
+      })
+      .catch((err) => console.log(`Ошибка при удалении карточки ${err}`));
   });
 
   //add cards like listener
@@ -80,32 +79,14 @@ function createCard(cardObj) {
     // toggle like
     const cardToLike = evt.target.closest(".card");
     if (!cardToLike.querySelector(".card_liked")) {
-      fetch(
-        `https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`,
-        {
-          method: "PUT",
-          headers: {
-            authorization: tempAuthTn,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => (cloneLikeSch.textContent = res.likes.length));
-      console.log(cloneLikeSch.textContent);
+      putLike(cardToLike.dataset.card_id)
+        .then((res) => (cloneLikeSch.textContent = res.likes.length))
+        .catch((err) => console.log(`Ошибка при постановки лайка ${err}`));
       cardToLike.querySelector(".card__like").classList.add("card_liked");
     } else {
-      fetch(
-        `https://nomoreparties.co/v1/${tempCohortId}/cards/likes/${cardToLike.dataset.card_id}`,
-        {
-          method: "DELETE",
-          headers: {
-            authorization: tempAuthTn,
-          },
-        }
-      )
-        .then((res) => res.json())
-        .then((res) => (cloneLikeSch.textContent = res.likes.length));
-      console.log(cloneLikeSch.textContent);
+      deleteLike(cardToLike.dataset.card_id)
+        .then((res) => (cloneLikeSch.textContent = res.likes.length))
+        .catch((err) => console.log(`Ошибка при снятии лайка ${err}`));
       cardToLike.querySelector(".card__like").classList.remove("card_liked");
     }
   });
@@ -115,44 +96,32 @@ function createCard(cardObj) {
   return cardClone;
 }
 
-
-
 function putCardToContainer(evt) {
   evt.preventDefault();
   const cardNameInputValue = popupAddNameInput.value;
   const cardUrlInputValue = popupAddUrlInput.value;
   const nearestPopup = evt.target.closest(".popup");
-  const submitButton = nearestPopup.querySelector('.popup__button');
+  const submitButton = nearestPopup.querySelector(".popup__button");
 
   function sendCard(cardName, url, submitButton, loadingText) {
-
     const originalButtonText = submitButton.textContent;
     submitButton.textContent = loadingText;
-  
-    fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards`, {
-      method: "POST",
-      headers: {
-        authorization: `${tempAuthTn}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        name: cardName,
-        link: url,
-      }),
-    })
-      .then((res) => res.json())
+
+    postCard(cardName, url)
       .then((responceCard) => {
         const newCard = createCard(responceCard);
         cardsContainer.prepend(newCard);
       })
+      .catch((err) =>
+        console.log(`Ошибка при отправке карточки на сервер ${err}`)
+      )
       .finally(() => {
         submitButton.textContent = originalButtonText;
-      })
+      });
   }
 
-  sendCard(cardNameInputValue, cardUrlInputValue, submitButton, 'Создание...');
+  sendCard(cardNameInputValue, cardUrlInputValue, submitButton, "Создание...");
 
-  
   closePopup(nearestPopup);
   popupAddNameInput.value = "";
   popupAddUrlInput.value = "";
@@ -161,20 +130,16 @@ function putCardToContainer(evt) {
 }
 
 function putInitialCards() {
-  fetch(`https://nomoreparties.co/v1/${tempCohortId}/cards`, {
-    headers: {
-      authorization: `${tempAuthTn}`,
-    },
-  })
-    .then((res) => {
-      return res.json();
-    })
+  getInitialCards()
     .then((cards) => {
       cards.forEach(function (card) {
         const initialCard = createCard(card);
         cardsContainer.prepend(initialCard);
       });
-    });
+    })
+    .catch((err) =>
+      console.log(`Ошибка при загрузке инициированных карточек ${err}`)
+    );
 }
 
 export { putCardToContainer, putInitialCards, addCardButton };

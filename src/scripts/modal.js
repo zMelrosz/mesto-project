@@ -11,7 +11,7 @@ const popupImage = page.querySelector(".popup_type_image");
 
 const popupEditForm = popupEdit.querySelector(".popup__container");
 const popupAddForm = page.querySelector(".popup_type_add");
-const popupAvatar = document.querySelector('.popup_type_avatar');
+const popupAvatar = document.querySelector(".popup_type_avatar");
 
 const popups = document.querySelectorAll(".popup");
 
