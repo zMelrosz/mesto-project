@@ -10,7 +10,7 @@ module.exports =
 
     output:  // ТОЧКА ВЫХОДА: путь, имя, свойство обновления путей внутри ксс и хтмл
     {
-        path: path.resolve(__dirname, '../dist'), // ссылка на текущую папку и относительный путь к точке выхода
+        path: path.resolve(__dirname, '../mesto-project/dist'), // ссылка на текущую папку и относительный путь к точке выхода
         filename: 'main.js',
         publicPath: ''
     },
