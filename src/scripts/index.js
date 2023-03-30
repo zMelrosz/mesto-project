@@ -1,4 +1,4 @@
-import { putCardToContainer, putInitialCards, addCardButton } from "./card.js";
+import { putCardToContainer, addCardButton } from "./card.js";
 import {
   popupAddForm,
   popupEditForm,
@@ -8,8 +8,8 @@ import {
   closePopup,
   popupAvatar,
 } from "./modal.js";
-import { enableValidation, classes } from "./validate.js";
-import { changeExplorerInfo, loadUserInfo, changeUserAvatar } from "./utils.js";
+import { enableValidation, validationSettings } from "./validate.js";
+import { changeExplorerInfo, loadUserInfoAndInitialCards, changeUserAvatar } from "./utils.js";
 import "../pages/pages.css"; // импортировали главный файл стилей
 
 const page = document.querySelector(".page"); //pageObj
@@ -25,14 +25,13 @@ const subtitleInput = popupEditForm.querySelector(
   ".popup__input_edit_subtitle"
 );
 
-loadUserInfo(); //load user info
+loadUserInfoAndInitialCards(); //load user info
 
 //enable validation
-enableValidation(classes);
+enableValidation(validationSettings);
 
 //add initial cards
 popupAddForm.addEventListener("submit", putCardToContainer);
-putInitialCards();
 
 // popup open listeners
 explorerEditButton.addEventListener("click", function () {

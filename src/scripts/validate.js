@@ -1,6 +1,6 @@
 //forms
 
-const classes = {
+const validationSettings = {
   formClass: "form",
   popupInputClass: ".popup__input",
   popupButtonClass: ".popup__button",
@@ -9,32 +9,22 @@ const classes = {
   inactiveButtonClass: "popup__button_inactive",
 };
 
-function showInputError(
-  formElement,
-  inputElement,
-  errorMessage,
-  errorClass,
-  activeErrorClass
-) {
+function showInputError(formElement, inputElement, errorMessage, settings) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add(errorClass);
+  inputElement.classList.add(settings.inputErrorClass);
   errorElement.textContent = errorMessage;
-  errorElement.classList.add(activeErrorClass);
+  errorElement.classList.add(settings.inputActiveErrorClass);
 }
 
-function hideInputError(
-  formElement,
-  inputElement,
-  errorClass,
-  activeErrorClass
-) {
+
+function hideInputError(formElement, inputElement, settings) {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(errorClass);
-  errorElement.classList.remove(activeErrorClass);
+  inputElement.classList.remove(settings.inputErrorClass);
+  errorElement.classList.remove(settings.inputActiveErrorClass);
   errorElement.textContent = "";
 }
 
-function isValid(formElement, inputElement, classes) {
+function isValid(formElement, inputElement, settings) {
   if (inputElement.validity.patternMismatch) {
     inputElement.setCustomValidity(inputElement.dataset.errorMessage);
   } else {
@@ -42,20 +32,9 @@ function isValid(formElement, inputElement, classes) {
   }
 
   if (!inputElement.validity.valid) {
-    showInputError(
-      formElement,
-      inputElement,
-      inputElement.validationMessage,
-      classes.inputErrorClass,
-      classes.inputActiveErrorClass
-    );
+    showInputError(formElement, inputElement, inputElement.validationMessage, settings);
   } else {
-    hideInputError(
-      formElement,
-      inputElement,
-      classes.inputErrorClass,
-      classes.inputActiveErrorClass
-    );
+    hideInputError(formElement, inputElement, settings);
   }
 }
 
@@ -65,8 +44,8 @@ function setEventListeners(formElement, inputClass, buttonClass) {
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", function () {
-      isValid(formElement, inputElement, classes);
-      toggleButtonState(inputList, buttonElement, classes);
+      isValid(formElement, inputElement, validationSettings);
+      toggleButtonState(inputList, buttonElement, validationSettings);
     });
   });
 }
@@ -101,4 +80,4 @@ function toggleButtonState(inputList, buttonElement, classes) {
   }
 }
 
-export { enableValidation, classes };
+export { enableValidation, validationSettings };
