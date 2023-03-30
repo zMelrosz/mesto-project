@@ -10,6 +10,7 @@ import {
 const page = document.querySelector(".page"); //pageObj
 const main = page.querySelector("main");
 export const cardsContainer = main.querySelector(".cards");
+console.log(cardsContainer);
 const addCardButton = page.querySelector(".explorer__add");
 const popupAddNameInput = popupAddForm.querySelector(".popup__input_edit_name");
 const popupAddUrlInput = popupAddForm.querySelector(".popup__input_edit_url");
@@ -17,7 +18,7 @@ const chosenImage = popupImage.querySelector(".card__image");
 const chosenImageCaption = popupImage.querySelector(".card__image-caption");
 
 // cards bigger
-function listenChosenImage(evt) {
+const listenChosenImage = (evt) => {
   const clickedImage = evt.target;
   const imageSrc = clickedImage.src;
   const imageCaption = clickedImage
@@ -29,7 +30,8 @@ function listenChosenImage(evt) {
   chosenImageCaption.textContent = imageCaption;
 }
 
-function createCard(cardObj) {
+const createCard = async (cardObj) => {
+
   const userId = document.querySelector(".explorer__person").dataset.user_id;
   const cardTemp = document.querySelector("#card-temp").content;
   const cardClone = cardTemp.querySelector(".card").cloneNode(true);
@@ -37,6 +39,8 @@ function createCard(cardObj) {
   const cloneLikes = cardClone.querySelector(".card__like-sch");
   const cloneLikeIcon = cardClone.querySelector(".card__like");
   const cloneDeleteIcon = cardClone.querySelector(".card__delete");
+  const cloneLike = cardClone.querySelector(".card__like");
+  const cloneLikeSch = cardClone.querySelector(".card__like-sch");
 
   if (cardObj._id) {
     cardClone.dataset.card_id = cardObj._id; // set card ID
@@ -62,31 +66,39 @@ function createCard(cardObj) {
 
   // delete card listener
   const cardDelete = cardClone.querySelector(".card__delete");
-  cardDelete.addEventListener("click", function (evt) {
+  cardDelete.addEventListener("click", async (evt) => {
     const cardToDelete = evt.target.closest(".card");
-    deleteCard(cardToDelete.dataset.card_id)
-      .then(() => {
-        cardToDelete.remove();
-      })
-      .catch((err) => console.log(`Ошибка при удалении карточки ${err}`));
+    try {
+      await deleteCard(cardToDelete.dataset.card_id);
+      cardToDelete.remove();
+    }
+    catch (err) {
+      console.log(`Ошибка при удалении карточки ${err}`)
+    }
   });
 
   //add cards like listener
-  const cloneLike = cardClone.querySelector(".card__like");
-  const cloneLikeSch = cardClone.querySelector(".card__like-sch");
-  cloneLike.addEventListener("click", function (evt) {
+  cloneLike.addEventListener("click", async (evt) => {
     // toggle like
     const cardToLike = evt.target.closest(".card");
     if (!cardToLike.querySelector(".card_liked")) {
-      putLike(cardToLike.dataset.card_id)
-        .then((res) => (cloneLikeSch.textContent = res.likes.length))
-        .then(cardToLike.querySelector(".card__like").classList.add("card_liked"))
-        .catch((err) => console.log(`Ошибка при постановки лайка ${err}`));
+      try {
+        const responceCard = await putLike(cardToLike.dataset.card_id);
+        cloneLikeSch.textContent = responceCard.likes.length;
+        cardToLike.querySelector(".card__like").classList.add("card_liked");
+      }
+      catch (err){
+        console.log(`Ошибка при постановки лайка ${err}`);
+      }
     } else {
-      deleteLike(cardToLike.dataset.card_id)
-        .then((res) => (cloneLikeSch.textContent = res.likes.length))
-        .then(cardToLike.querySelector(".card__like").classList.remove("card_liked"))
-        .catch((err) => console.log(`Ошибка при снятии лайка ${err}`));
+      try {
+        const responceCard = await deleteLike(cardToLike.dataset.card_id);
+        cloneLikeSch.textContent = responceCard.likes.length;
+        cardToLike.querySelector(".card__like").classList.remove("card_liked");
+      }
+      catch (err) {
+        console.log(`Ошибка при снятии лайка ${err}`);
+      }
     }
   });
 
@@ -95,14 +107,14 @@ function createCard(cardObj) {
   return cardClone;
 }
 
-function putCardToContainer(evt) {
+const putCardToContainer = (evt) => {
   evt.preventDefault();
   const cardNameInputValue = popupAddNameInput.value;
   const cardUrlInputValue = popupAddUrlInput.value;
   const nearestPopup = evt.target.closest(".popup");
   const submitButton = nearestPopup.querySelector(".popup__button");
 
-  function sendCard(cardName, url, submitButton, loadingText) {
+  const sendCard = (cardName, url, submitButton, loadingText) => {
     const originalButtonText = submitButton.textContent;
     submitButton.textContent = loadingText;
 
@@ -126,20 +138,6 @@ function putCardToContainer(evt) {
   nearestPopup.querySelector(".popup__button").disabled = true;
   evt.submitter.classList.add("popup__button_inactive");
 }
-
-/* function putInitialCards() {
-  getInitialCards()
-    .then((cards) => {
-      cards.forEach(function (card) {
-        const initialCard = createCard(card);
-        cardsContainer.prepend(initialCard);
-      });
-    })
-    .catch((err) =>
-      console.log(`Ошибка при загрузке инициированных карточек ${err}`)
-    );
-}
-*/
 
 export { putCardToContainer, 
 createCard,
