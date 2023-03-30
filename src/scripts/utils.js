@@ -22,12 +22,10 @@ const loadUserInfoAndInitialCards = async () => {
     userSubname.textContent = userInfo.about;
     userAvatar.style.backgroundImage = `url(${userInfo.avatar})`;
     userId.dataset.user_id = userInfo._id;
-    console.log(`Загружено ${cards.length} карточек.`);
 
     //load and put initial cards
-    cards.forEach(function (card) {
-      console.log(`Создание карточки ${card.name}`);
-      const initialCard = createCard(card);
+    cards.forEach(async (card) => {
+      const initialCard = await createCard(card);
       cardsContainer.prepend(initialCard);
     });
   } catch (err) {

@@ -114,23 +114,23 @@ const putCardToContainer = (evt) => {
   const nearestPopup = evt.target.closest(".popup");
   const submitButton = nearestPopup.querySelector(".popup__button");
 
-  const sendCard = (cardName, url, submitButton, loadingText) => {
+  const sendCard = async (cardName, url, submitButton, loadingText) => {
     const originalButtonText = submitButton.textContent;
     submitButton.textContent = loadingText;
 
-    postCard(cardName, url)
-      .then((responceCard) => {
-        const newCard = createCard(responceCard);
-        cardsContainer.prepend(newCard);
-        closePopup(nearestPopup);
-      })
-      .catch((err) =>
-        console.log(`Ошибка при отправке карточки на сервер ${err}`)
-      )
-      .finally(() => {
-        submitButton.textContent = originalButtonText;
-      });
-  }
+  
+    try{
+      const postedCard = await postCard(cardName, url);
+      cardsContainer.prepend(await createCard(postedCard));
+      closePopup(nearestPopup);
+    }
+    catch (err) {
+      console.log(`Ошибка при отправке карточки на сервер ${err}`)
+    }
+    finally {
+      submitButton.textContent = originalButtonText;
+    }
+  } 
 
   sendCard(cardNameInputValue, cardUrlInputValue, submitButton, "Создание...")
 
