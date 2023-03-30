@@ -1,6 +1,5 @@
 import { openPopup, popupImage, popupAddForm, closePopup } from "./modal.js";
 import {
-  getInitialCards,
   postCard,
   deleteCard,
   putLike,
@@ -10,10 +9,12 @@ import {
 //----------cards----------
 const page = document.querySelector(".page"); //pageObj
 const main = page.querySelector("main");
-const cardsContainer = main.querySelector(".cards");
+export const cardsContainer = main.querySelector(".cards");
 const addCardButton = page.querySelector(".explorer__add");
 const popupAddNameInput = popupAddForm.querySelector(".popup__input_edit_name");
 const popupAddUrlInput = popupAddForm.querySelector(".popup__input_edit_url");
+const chosenImage = popupImage.querySelector(".card__image");
+const chosenImageCaption = popupImage.querySelector(".card__image-caption");
 
 // cards bigger
 function listenChosenImage(evt) {
@@ -22,8 +23,6 @@ function listenChosenImage(evt) {
   const imageCaption = clickedImage
     .closest(".card")
     .querySelector(".card__name").textContent;
-  const chosenImage = popupImage.querySelector(".card__image");
-  const chosenImageCaption = popupImage.querySelector(".card__image-caption");
   openPopup(popupImage);
   chosenImage.src = imageSrc;
   chosenImage.alt = "Пейзаж";
@@ -81,13 +80,13 @@ function createCard(cardObj) {
     if (!cardToLike.querySelector(".card_liked")) {
       putLike(cardToLike.dataset.card_id)
         .then((res) => (cloneLikeSch.textContent = res.likes.length))
+        .then(cardToLike.querySelector(".card__like").classList.add("card_liked"))
         .catch((err) => console.log(`Ошибка при постановки лайка ${err}`));
-      cardToLike.querySelector(".card__like").classList.add("card_liked");
     } else {
       deleteLike(cardToLike.dataset.card_id)
         .then((res) => (cloneLikeSch.textContent = res.likes.length))
+        .then(cardToLike.querySelector(".card__like").classList.remove("card_liked"))
         .catch((err) => console.log(`Ошибка при снятии лайка ${err}`));
-      cardToLike.querySelector(".card__like").classList.remove("card_liked");
     }
   });
 
@@ -111,6 +110,7 @@ function putCardToContainer(evt) {
       .then((responceCard) => {
         const newCard = createCard(responceCard);
         cardsContainer.prepend(newCard);
+        closePopup(nearestPopup);
       })
       .catch((err) =>
         console.log(`Ошибка при отправке карточки на сервер ${err}`)
@@ -120,16 +120,14 @@ function putCardToContainer(evt) {
       });
   }
 
-  sendCard(cardNameInputValue, cardUrlInputValue, submitButton, "Создание...");
+  sendCard(cardNameInputValue, cardUrlInputValue, submitButton, "Создание...")
 
-  closePopup(nearestPopup);
-  popupAddNameInput.value = "";
-  popupAddUrlInput.value = "";
+  evt.target.reset();
   nearestPopup.querySelector(".popup__button").disabled = true;
   evt.submitter.classList.add("popup__button_inactive");
 }
 
-function putInitialCards() {
+/* function putInitialCards() {
   getInitialCards()
     .then((cards) => {
       cards.forEach(function (card) {
@@ -141,5 +139,8 @@ function putInitialCards() {
       console.log(`Ошибка при загрузке инициированных карточек ${err}`)
     );
 }
+*/
 
-export { putCardToContainer, putInitialCards, addCardButton };
+export { putCardToContainer, 
+createCard,
+addCardButton };

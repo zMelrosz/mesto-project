@@ -1,6 +1,7 @@
 import { popupEditForm, explorerTitle, explorerSubtitle } from "./index.js";
 import { closePopup } from "./modal.js";
-import { getUserInfo, patchUserAvatar, updateUserInfo } from "./api.js";
+import { getInitialCards, getUserInfo, patchUserAvatar, updateUserInfo } from "./api.js";
+import { cardsContainer, createCard } from "./card.js";
 
 const userName = document.querySelector(".explorer__title");
 const userSubname = document.querySelector(".explorer__subtitle");
@@ -12,50 +13,51 @@ const subtitleInput = popupEditForm.querySelector(
   ".popup__input_edit_subtitle"
 );
 
-function loadUserInfo() {
-  getUserInfo()
-    .then((userInfo) => {
+function loadUserInfoAndInitialCards() {
+
+  Promise.all([getUserInfo(), getInitialCards()])
+  .then(([userInfo, cards]) => {
+    //load and put user info
       userName.textContent = userInfo.name;
       userSubname.textContent = userInfo.about;
       userAvatar.style.backgroundImage = `url(${userInfo.avatar})`;
       userId.dataset.user_id = userInfo._id;
-    })
-    .catch((err) =>
-      console.log(`Ошибка при загрузке пользовательских данных ${err}`)
-    );
-}
 
-function patchUserInfo(userName, userAbout, submitButton, loadingText) {
-  const originalButtonText = submitButton.textContent;
-  submitButton.textContent = loadingText;
+      //load and put initial cards
+      cards.forEach(function (card) {
+        const initialCard = createCard(card);
+        cardsContainer.prepend(initialCard);
+      });
+  })
+  .catch((err) => {
+    console.log(`Ошибка при загрузке пользовательских данных и карточек ${err}`);
+  });
 
-  updateUserInfo(userName, userAbout)
-    .catch((err) =>
-      console.log(`Ошибка при обновлении пользовательских данных ${err}`)
-    )
-    .finally(() => {
-      submitButton.textContent = originalButtonText;
-    });
 }
 
 function changeExplorerInfo(evt) {
   evt.preventDefault();
   const submitButton = evt.target.querySelector(".popup__button");
+  const nearestPopup = evt.target.closest(".popup");
 
   const titleInputValue = titleInput.value;
   const subtitleInputValue = subtitleInput.value;
-  explorerTitle.textContent = titleInputValue;
-  explorerSubtitle.textContent = subtitleInputValue;
 
-  patchUserInfo(
-    titleInputValue,
-    subtitleInputValue,
-    submitButton,
-    "Сохранение..."
-  );
-  const nearestPopup = evt.target.closest(".popup");
+  const originalButtonText = submitButton.textContent;
+  submitButton.textContent = "Сохранение...";
 
-  closePopup(nearestPopup);
+  updateUserInfo(titleInputValue, subtitleInputValue)
+    .then(() => {
+      explorerTitle.textContent = titleInputValue;
+      explorerSubtitle.textContent = subtitleInputValue;
+      closePopup(nearestPopup);
+    })
+    .catch((err) => {
+      console.log(`Ошибка при обновлении пользовательских данных ${err}`);
+    })
+    .finally(() => {
+      submitButton.textContent = originalButtonText;
+    });
 }
 
 function changeUserAvatar(evt) {
@@ -76,7 +78,9 @@ function changeUserAvatar(evt) {
     })
     .finally(() => {
       avatarSubmit.textContent = originalButtonText;
-    });
+    })
+    .catch((err) => console.log(`Ошибка при обновлении пользовательского аватара ${err}`))
+    
 }
 
-export { changeExplorerInfo, loadUserInfo, changeUserAvatar };
+export { changeExplorerInfo, loadUserInfoAndInitialCards, changeUserAvatar };
